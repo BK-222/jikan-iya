@@ -2,7 +2,9 @@
 import { ref, computed } from 'vue';
 
 const { data: animes, error } = await useAsyncData('data', () => {
-  return $fetch('/api/UseAnimeService');
+  return $fetch('/api/Test');
+
+// const { animes, error } = await useFetch('/api/test');
 });
 </script>
 <template>
