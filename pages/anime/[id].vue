@@ -16,7 +16,6 @@ console.log('Fetched anime details:', animeDetails);
 
 <template>
   <p class="text-2xl text-center font-bold">Anime Detail Page</p>
-  <NuxtLink to="/">Back to Main Page</NuxtLink>
   <div class="flex flex-col items-center h-screen">
     <div v-if="error">{{ error.message }}</div>
     <div v-else>
@@ -28,7 +27,7 @@ console.log('Fetched anime details:', animeDetails);
           Season: {{ season.name }}
         </li>
       </ul>
-      <NuxtLink to="/" prefetch>
+      <NuxtLink to="/">
         <BaseButton class="btn">Back to Anime List</BaseButton>
       </NuxtLink>
     </div>

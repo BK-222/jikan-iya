@@ -4,7 +4,7 @@
 
 // const store = useAnimeListStore();
 
-const { data: animes, error } = await useAsyncData('data', () => {
+const { data: animes, error } = await useLazyAsyncData('data', () => {
   return $fetch('/api/Test3');
 });
 
@@ -19,10 +19,10 @@ const { data: animes, error } = await useAsyncData('data', () => {
   <div>
     <p>Iyashikei Anime</p>
     <div v-if="error">{{ error }}</div>
-    <ul v-else>
+    <ul class="flex flex-row flex-wrap" v-else>
       <li v-for="anime in animes" :key="anime.id">
         <NuxtLink :to="`/anime/${anime.id}`">
-          <NuxtImg :src="anime.image" alt="anime image" loading="lazy" />
+          <NuxtImg class="h-70 w-60" :src="anime.image" alt="anime image" loading="lazy" />
           {{ anime.id }}: {{ anime.name }}
         </NuxtLink>
       </li>
