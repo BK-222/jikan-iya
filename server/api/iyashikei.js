@@ -19,8 +19,16 @@ const fetchAnimeData = defineEventHandler(async (event) => {
       }
     }
 
+
     const idealResponse = allAnime.reduce((acc, anime) => {
-      const mainTitle = anime.title.split(' ')[0];
+      const mainTitle = anime.title
+      .replace(/^(Zoku)\s*/, '') // removes prefixes
+      .replace(/:.*/, '') // removes anything after and including the :
+      .split(' ')[0]; //regex 
+
+      if (anime.title.toLowerCase().includes("heya camp")) {
+        return acc; // Skip this entry
+      }
 
       if (!acc[mainTitle]) {
         acc[mainTitle] = {
@@ -28,12 +36,13 @@ const fetchAnimeData = defineEventHandler(async (event) => {
           name: anime.title,
           image: anime.images.jpg.image_url,
           genre: anime.genres,
-          seasons: [],
+          type: anime.type,
+          seasons: []
         }
       }
-
       acc[mainTitle].seasons.push(anime);
       return acc;
+      
     }, {});
 
     return Object.values(idealResponse);
