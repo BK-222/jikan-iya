@@ -16,9 +16,9 @@ console.log('Fetched anime details:', animeDetails);
 
 <template>
   <p class="text-2xl text-center font-bold">Anime Detail Page</p>
-  <div class="flex flex-col items-center h-screen">
+  <div>
     <div v-if="error">{{ error.message }}</div>
-    <div v-else>
+    <div v-else class="flex flex-col items-center">
       <img :src="animeDetails.image" alt="Anime Image" />
       <h2>{{ animeDetails.name }}</h2>
       <p>Genres: {{ animeDetails?.genres?.join(', ') || 'No genres available'}}</p>
@@ -27,8 +27,8 @@ console.log('Fetched anime details:', animeDetails);
           Season: {{ season.name }}
         </li>
       </ul>
-      <NuxtLink to="/">
-        <BaseButton class="btn">Back to Anime List</BaseButton>
+      <NuxtLink to="/mainstream">
+        <BaseButton class="self-center">Back to Anime List</BaseButton>
       </NuxtLink>
     </div>
   </div>
