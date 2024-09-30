@@ -12,13 +12,12 @@ const fetchAnimeData = defineEventHandler(async (event) => {
       if (response.data && response.data.length > 0) {
         allAnime = [...allAnime, ...response.data];
         currentPage++;
-        await delay(1000);
+        await delay(800);
       } else {
-        console.log('No more data available, stopping pagination');
         hasMoreData = false;
+        // console.log('No more data available, stopping pagination');
       }
     }
-
 
     const idealResponse = allAnime.reduce((acc, anime) => {
       const mainTitle = anime.title

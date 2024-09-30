@@ -3,12 +3,23 @@ import useAnimeStore from '@/stores/AnimeList.js';
 
 const store = useAnimeStore();
 
+// const animes = ref([]);
+// const error = ref(null);
+// const loading = ref(true);
+
 // if (store.animes.length === 0) {
-//   const { data: animes, error } = await useLazyAsyncData('data', () => {
+//   const { data, error: fetchError } = await useLazyAsyncData('data', () => {
 //     return $fetch('/api/iyashikei');
 //   });
 //   store.setAnimes(animes.value);
 // }
+
+
+
+
+
+
+
 const { data: animes, error } = await useLazyAsyncData('data', () => {
   return $fetch('/api/iyashikei');
 });

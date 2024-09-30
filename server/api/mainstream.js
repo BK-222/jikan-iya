@@ -9,6 +9,7 @@ const fetchAnimeData = defineEventHandler(async (event) => {
     // );
     // const responses = await Promise.all(promises);
 
+
     const responses = [];
     for (const id of mainstreamAnimeIds) {
       const response = await $fetch(`https://api.jikan.moe/v4/anime/${id}`);
