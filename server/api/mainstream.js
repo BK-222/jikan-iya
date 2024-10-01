@@ -14,7 +14,7 @@ const fetchAnimeData = defineEventHandler(async (event) => {
     for (const id of mainstreamAnimeIds) {
       const response = await $fetch(`https://api.jikan.moe/v4/anime/${id}`);
       responses.push(response);
-      await delay(350); // Delay of 400ms to stay within the rate limit
+      await delay(450); // Delay of 400ms to stay within the rate limit
     }
 
     const idealResponse = responses.map( ({ data }) => ({

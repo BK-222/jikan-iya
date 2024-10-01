@@ -23,7 +23,7 @@ const fetchAnimeData = defineEventHandler(async (event) => {
       const mainTitle = anime.title
       .replace(/^(Zoku)\s*/, '') // removes prefixes
       .replace(/:.*/, '') // removes anything after and including the :
-      .split(' ')[0]; //regex 
+      .split(' ')[0]; // extracts the first word
 
       if (anime.title.toLowerCase().includes("heya camp")) {
         return acc; // Skip this entry
