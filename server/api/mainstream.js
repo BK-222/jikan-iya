@@ -28,7 +28,7 @@ const fetchAnimeData = defineEventHandler(async (event) => {
     return idealResponse;
   } catch(error) {
     console.error('Error fetching anime ', error);
-    throw createError({ statusCode: 500, message: 'Failed to fetch Iyashikei anime.' });
+    throw createError({ statusCode: 500, message: 'Failed to fetch Mainstream anime.' });
   }
 });
 

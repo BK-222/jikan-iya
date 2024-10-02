@@ -2,10 +2,13 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
 const useAnimeListStore = defineStore('animeList', () => {
-  const animes = ref([]);
+  const mainstreamAnimes = ref([]);
+  const iyashikeiAnimes = ref([]);
 
   const getAnimeById = (id) => {
-    return animes.value.find(anime => anime.id === id);
+    const animeId = iyashikeiAnimes.value.find(anime => anime.id === id) || 
+    mainstreamAnimes.value.find(anime => anime.id === id);
+    return animeId;
   }
 
   const getMainstreamAnimes = (ids) => {
@@ -13,7 +16,7 @@ const useAnimeListStore = defineStore('animeList', () => {
   }
 
   const getIyashikeiAnimes = () => {
-    return animes.value;
+    return iyashikeiAnimes.value;
   }
 
   const getUniqueAnimes = () => {
@@ -28,13 +31,17 @@ const useAnimeListStore = defineStore('animeList', () => {
     });
   }
 
-  const setAnimes = function(animeList) {
-    animes.value = animeList;
+  const setMainstreamAnimes = function(animeList) {
+    mainstreamAnimes.value = animeList;
   }
 
-  return { animes,
+  const setIyashikeiAnimes = function(animeList) {
+    iyashikeiAnimes.value = animeList;
+  }
+
+  return { 
     getAnimeById, getMainstreamAnimes, getIyashikeiAnimes, getUniqueAnimes,
-    setAnimes
+    setMainstreamAnimes, setIyashikeiAnimes
   }
 });
 

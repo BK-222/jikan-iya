@@ -8,7 +8,8 @@ const fetchAnimeDetails = defineEventHandler(async (event) => {
       name: response.data.title,
       image: response.data.images.jpg.image_url,
       genres: response.data.genres.map(genre => genre.name),
-      episodes: response.data.episodes
+      episodes: response.data.episodes,
+      seasons: response.data.seasons
     }
     return idealResponse;
   } catch (error) {
