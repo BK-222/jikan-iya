@@ -6,13 +6,19 @@ const useAnimeListStore = defineStore('animeList', () => {
   const iyashikeiAnimes = ref([]);
 
   const getAnimeById = (id) => {
-    const animeId = iyashikeiAnimes.value.find(anime => anime.id === id) || 
+    const animeId =
+    iyashikeiAnimes.value.find(anime => anime.id === id) || 
     mainstreamAnimes.value.find(anime => anime.id === id);
     return animeId;
   }
 
-  const getMainstreamAnimes = (ids) => {
-    return animes.value.filter(anime => ids.includes(anime.id));
+  // const getMainstreamAnimes = (ids) => {
+  //   return mainstreamAnimes.value.filter(anime => ids.includes(anime.id));
+  // }
+
+  
+  const getMainstreamAnimes = () => {
+    return mainstreamAnimes.value;
   }
 
   const getIyashikeiAnimes = () => {
@@ -21,7 +27,7 @@ const useAnimeListStore = defineStore('animeList', () => {
 
   const getUniqueAnimes = () => {
     const uniqueTitles = {};
-    return animes.value.filter(anime => {
+    return iyashikeiAnimes.value.filter(anime => {
       const mainTitle = anime.name.split(' ')[0];
       if (uniqueTitles[mainTitle]) {
         return false;
@@ -39,7 +45,7 @@ const useAnimeListStore = defineStore('animeList', () => {
     iyashikeiAnimes.value = animeList;
   }
 
-  return { 
+  return { mainstreamAnimes, iyashikeiAnimes,
     getAnimeById, getMainstreamAnimes, getIyashikeiAnimes, getUniqueAnimes,
     setMainstreamAnimes, setIyashikeiAnimes
   }

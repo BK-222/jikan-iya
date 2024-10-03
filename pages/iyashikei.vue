@@ -15,18 +15,20 @@ const store = useAnimeListStore();
 // }
 
 const { data, error, pending } = useAsyncData('iyashikeiData', () => {
-  if (store.animes.length === 0) {
+  if (store.iyashikeiAnimes.length === 0) {
     return $fetch('/api/iyashikei');
   } else {
-    return Promise.resolve(store.animes);
+    return Promise.resolve(store.iyashikeiAnimes);
   }
 });
 
-if (data.value && store.animes.length === 0) {
-  store.setAnimes(data.value);
+if (data.value && store.iyashikeiAnimes.length === 0) {
+  console.log('Setting Mainstream Animes:', data.value);
+  store.setIyashikeiAnimes(data.value);
 }
 
 const iyashikeiAnimes = computed(() => {
+  console.log('Iyashikei Animes:', store.iyashikeiAnimes);
   return store.getIyashikeiAnimes();
 });
 
@@ -51,5 +53,3 @@ const iyashikeiAnimes = computed(() => {
     </ul>
   </div>
 </template>
-
-

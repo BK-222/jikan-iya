@@ -6,11 +6,12 @@ const store = useAnimeListStore();
 const mainstreamAnimeIds = [34798, 4081, 457, 17549];
 
 // if this function is being used without await, it has to return Promise.resolve()
-const { data, error, pending } = await useAsyncData('mainstreamData', () => {
+const { data, error, pending } = useAsyncData('mainstreamData', () => {
   if (store.mainstreamAnimes.length === 0) {
     return $fetch('/api/mainstream'); //stored in data.value
   } else {
-    return Promise.resolve(store.mainstreamAnimes); //stored in data.value
+    // return Promise.resolve(store.mainstreamAnimes); //stored in data.value
+    return Promise.resolve(store.mainstreamAnimes);
   }
 });
 
@@ -18,8 +19,12 @@ if (data.value && store.mainstreamAnimes.length === 0) {
   store.setMainstreamAnimes(data.value);
 }
 
+// const mainstreamAnimes = computed(() => {
+//   return store.getMainstreamAnimes(mainstreamAnimeIds);
+// });
+
 const mainstreamAnimes = computed(() => {
-  return store.getMainstreamAnimes;
+  return store.mainstreamAnimes;
 });
 
 // const animes = ref([]);

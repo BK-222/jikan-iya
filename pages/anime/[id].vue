@@ -4,10 +4,10 @@ import { useRoute } from 'vue-router';
 const route = useRoute();
 // const router = useRouter();
 
-const store = useAnimeListStore();
+// const store = useAnimeListStore();
 const animeId = ref(route.params.id);
 
-const { data: animeDetails, error } = await useAsyncData(`animeDetailsData-${animeId}`, () => {
+const { data: animeDetails, error, pending } = await useAsyncData(`animeDetailsData-${animeId}`, () => {
   return $fetch(`/api/anime/${animeId.value}`)
 });
 
