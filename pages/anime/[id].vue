@@ -1,8 +1,8 @@
 <script setup>
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 const route = useRoute();
-// const router = useRouter();
+const router = useRouter();
 
 // const store = useAnimeListStore();
 const animeId = ref(route.params.id);
@@ -12,6 +12,8 @@ const { data: animeDetails, error, pending } = await useAsyncData(`animeDetailsD
 });
 
 console.log('Fetched anime details:', animeDetails);
+
+const goBack = () => { router.back() }
 
 </script>
 
@@ -29,9 +31,7 @@ console.log('Fetched anime details:', animeDetails);
           Season: {{ season.name }}
         </li>
       </ul>
-      <NuxtLink to="/mainstream">
-        <BaseButton class="self-center">Back to Anime List</BaseButton>
-      </NuxtLink>
+        <BaseButton @click="goBack()" class="self-center">Back to Anime List</BaseButton>
     </div>
   </div>
 </template>

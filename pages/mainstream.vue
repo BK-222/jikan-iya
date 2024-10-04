@@ -6,7 +6,7 @@ const store = useAnimeListStore();
 const mainstreamAnimeIds = [34798, 4081, 457, 17549];
 
 // if this function is being used without await, it has to return Promise.resolve()
-const { data, error, pending } = useAsyncData('mainstreamData', () => {
+const { data, error, pending: isLoading } = useAsyncData('mainstreamData', () => {
   if (store.mainstreamAnimes.length === 0) {
     return $fetch('/api/mainstream'); //stored in data.value
   } else {
@@ -16,6 +16,7 @@ const { data, error, pending } = useAsyncData('mainstreamData', () => {
 });
 
 if (data.value && store.mainstreamAnimes.length === 0) {
+  console.log('Setting Mainstream Animes:', data.value);
   store.setMainstreamAnimes(data.value);
 }
 
@@ -50,20 +51,12 @@ const mainstreamAnimes = computed(() => {
   <NuxtLink to="/iyashikei">Iyashikei</NuxtLink>
   <div>
     <div v-if="error">{{ error }}</div>
-    <div v-else-if="pending">Please wait data is fetching...</div>
+    <div v-else-if="isLoading">Please wait data is fetching...</div>
     <ul v-else class="flex flex-row justify-center space-x-2">
-      <li v-for="anime in mainstreamAnimes" :key="anime.id">
-        <NuxtLink :to="`/anime/${anime.id}`">
-          <NuxtImg class="h-80 w-60" v-if="anime.image" :src="anime.image" alt="anime image" loading="lazy" />
-          <span v-else>No Image Available</span>
-          <p>{{ anime.id }}: {{ anime.name }}</p>
-          <p>{{ anime.type }}</p>
-        </NuxtLink>
-        
-      </li>
+      <AnimeItem v-for="anime in store.mainstreamAnimes" :key="anime.id" :anime="anime"></AnimeItem>
     </ul>
     <NuxtLink to="/">
-        <BaseButton class="self-center">Back to Anime List</BaseButton>
-      </NuxtLink>
+      <BaseButton class="self-center">Back to main</BaseButton>
+    </NuxtLink>
   </div>
 </template>

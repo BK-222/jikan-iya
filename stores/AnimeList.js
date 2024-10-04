@@ -17,13 +17,13 @@ const useAnimeListStore = defineStore('animeList', () => {
   // }
 
   
-  const getMainstreamAnimes = () => {
-    return mainstreamAnimes.value;
-  }
+  // const getMainstreamAnimes = () => {
+  //   return mainstreamAnimes.value;
+  // }
 
-  const getIyashikeiAnimes = () => {
-    return iyashikeiAnimes.value;
-  }
+  // const getIyashikeiAnimes = () => {
+  //   return iyashikeiAnimes.value;
+  // }
 
   const getUniqueAnimes = () => {
     const uniqueTitles = {};
@@ -46,7 +46,7 @@ const useAnimeListStore = defineStore('animeList', () => {
   }
 
   return { mainstreamAnimes, iyashikeiAnimes,
-    getAnimeById, getMainstreamAnimes, getIyashikeiAnimes, getUniqueAnimes,
+    getAnimeById, getUniqueAnimes,
     setMainstreamAnimes, setIyashikeiAnimes
   }
 });

@@ -14,42 +14,44 @@ const store = useAnimeListStore();
 //   store.setAnimes(animes.value);
 // }
 
-const { data, error, pending } = useAsyncData('iyashikeiData', () => {
+
+const { data, error, pending: isLoading } = useAsyncData('iyashikeiData', () => {
   if (store.iyashikeiAnimes.length === 0) {
     return $fetch('/api/iyashikei');
   } else {
     return Promise.resolve(store.iyashikeiAnimes);
   }
 });
+console.log('Data loaded:', data);
+watch(data, (newValue) => {
+  console.log('Data updated:', newValue);
+});
 
 if (data.value && store.iyashikeiAnimes.length === 0) {
-  console.log('Setting Mainstream Animes:', data.value);
+  console.log('Setting Iyashikei Animes:', data.value);
   store.setIyashikeiAnimes(data.value);
 }
 
+
 const iyashikeiAnimes = computed(() => {
   console.log('Iyashikei Animes:', store.iyashikeiAnimes);
-  return store.getIyashikeiAnimes();
+  return store.iyashikeiAnimes;
 });
 
 </script>
 
-<template>
+<template :key="data.length">
   <p class="text-2xl text-center font-bold">Iyashikei page.</p>
   <NuxtLink to="/mainstream">mainstream</NuxtLink>
   <div>
     <p>Iyashikei Anime</p>
     <div v-if="error">{{ error }}</div>
-    <div v-else-if="pending">Please wait data is fetching...</div>
+    <div v-else-if="isLoading">Please wait data is fetching...</div>
     <ul class="flex flex-row flex-wrap" v-else>
-      <li v-for="anime in iyashikeiAnimes" :key="anime.id">
-        <NuxtLink :to="`/anime/${anime.id}`">
-          <NuxtImg class="h-70 w-60"v-if="anime.image" :src="anime.image" alt="anime image" loading="lazy" />
-          <span v-else>No Image Available</span>
-          <p>{{ anime.id }}: {{ anime.name }}</p>
-          <p>{{ anime.type }}</p>
-        </NuxtLink>
-      </li>
+      <AnimeItem v-for="anime in store.iyashikeiAnimes" :key="anime.id" :anime="anime"></AnimeItem>
     </ul>
+    <NuxtLink to="/">
+      <BaseButton class="self-center">Back to main</BaseButton>
+    </NuxtLink>
   </div>
 </template>
