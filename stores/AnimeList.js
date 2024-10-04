@@ -16,15 +16,6 @@ const useAnimeListStore = defineStore('animeList', () => {
   //   return mainstreamAnimes.value.filter(anime => ids.includes(anime.id));
   // }
 
-  
-  // const getMainstreamAnimes = () => {
-  //   return mainstreamAnimes.value;
-  // }
-
-  // const getIyashikeiAnimes = () => {
-  //   return iyashikeiAnimes.value;
-  // }
-
   const getUniqueAnimes = () => {
     const uniqueTitles = {};
     return iyashikeiAnimes.value.filter(anime => {
@@ -38,7 +29,9 @@ const useAnimeListStore = defineStore('animeList', () => {
   }
 
   const setMainstreamAnimes = function(animeList) {
+    console.log('Setting mainstream animes:', animeList);
     mainstreamAnimes.value = animeList;
+    console.log('Updated mainstream animes:', mainstreamAnimes.value);
   }
 
   const setIyashikeiAnimes = function(animeList) {

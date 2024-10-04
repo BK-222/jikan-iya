@@ -9,6 +9,7 @@ const fetchAnimeData = defineEventHandler(async (event) => {
       genre: anime.genres,
       related: []
     }));
+    
     return idealResponse;
   } catch(error) {
       throw createError({ statusCode: 500, message: 'Failed to fetch Iyashikei anime.' });

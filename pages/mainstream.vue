@@ -6,17 +6,16 @@ const store = useAnimeListStore();
 const mainstreamAnimeIds = [34798, 4081, 457, 17549];
 
 // if this function is being used without await, it has to return Promise.resolve()
-const { data, error, pending: isLoading } = useAsyncData('mainstreamData', () => {
+const { data, error, pending: isLoading } = await useAsyncData('mainstreamData', () => {
   if (store.mainstreamAnimes.length === 0) {
-    return $fetch('/api/mainstream'); //stored in data.value
+    return $fetch('/api/mainstream'); // Call the API endpoint
   } else {
-    // return Promise.resolve(store.mainstreamAnimes); //stored in data.value
+    console.log('Returning cached data...'); // <--- NEW LOG STATEMENT
     return Promise.resolve(store.mainstreamAnimes);
   }
 });
 
 if (data.value && store.mainstreamAnimes.length === 0) {
-  console.log('Setting Mainstream Animes:', data.value);
   store.setMainstreamAnimes(data.value);
 }
 
@@ -24,26 +23,10 @@ if (data.value && store.mainstreamAnimes.length === 0) {
 //   return store.getMainstreamAnimes(mainstreamAnimeIds);
 // });
 
-const mainstreamAnimes = computed(() => {
-  return store.mainstreamAnimes;
-});
-
-// const animes = ref([]);
-// const error = ref(null);
-// const loading = ref(true);
-
 // const mainstreamAnimes = computed(() => {
-//   return store.animes.filter(anime => mainstreamAnimeIds.includes(anime.id));
+//   return store.mainstreamAnimes;
 // });
 
-//   const { data, error: fetchedError } = useAsyncData('data', () => {
-//    if (store.animes.length === 0) {
-//    return $fetch('/api/mainstream');
-// }
-//   animes.value = data.value;
-//   error.value = fetchedError;
-//   animes.value ? store.setAnimes(animes.value): animes.value = store.animes;
-// });
 </script>
 
 <template>
