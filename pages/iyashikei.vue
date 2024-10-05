@@ -2,22 +2,32 @@
 import useAnimeListStore from '@/stores/AnimeList.js';
 
 const store = useAnimeListStore();
+// const isLoading = ref(true);
 
-const { data, error, pending: isLoading } = await useAsyncData('iyashikeiData', () => {
+const { data, error } = await useAsyncData('iyashikeiData', () => {
   if (store.iyashikeiAnimes.length === 0) {
     return $fetch('/api/iyashikei');
   } else {
-    return Promise.resolve(store.iyashikeiAnimes);
+    return store.iyashikeiAnimes;
   }
 });
 
 if (data.value && store.iyashikeiAnimes.length === 0) {
-  console.log('Setting Iyashikei Animes:', data.value);
   store.setIyashikeiAnimes(data.value);
 }
 
+// const { data, error } = await useAsyncData('iyashikeiData', async () => {
+//   let fetchedData;
+//   fetchedData = await $fetch('/api/iyashikei');
+//   if (store.iyashikeiAnimes.length === 0) {
+//     store.setIyashikeiAnimes(fetchedData);
+//   } else {
+//     fetchedData = store.iyashikeiAnimes;
+//   }
+//   return fetchedData;
+// });
+
 const iyashikeiAnimes = computed(() => {
-  console.log('Iyashikei Animes:', store.iyashikeiAnimes);
   return store.iyashikeiAnimes;
 });
 

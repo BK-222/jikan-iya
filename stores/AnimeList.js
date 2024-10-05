@@ -5,6 +5,10 @@ const useAnimeListStore = defineStore('animeList', () => {
   const mainstreamAnimes = ref([]);
   const iyashikeiAnimes = ref([]);
 
+  const animeSeries = reactive({
+    34798: []
+  });
+
   const getAnimeById = (id) => {
     const animeId =
     iyashikeiAnimes.value.find(anime => anime.id === id) || 
