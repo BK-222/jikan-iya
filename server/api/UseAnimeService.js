@@ -1,6 +1,6 @@
 const fetchAnimeData = defineEventHandler(async (event) => {
   try {
-    const response = await $fetch('https://api.jikan.moe/v4/anime?genres=63&limit=20');
+    const response = await $fetch('https://api.jikan.moe/v4/anime?genres=63&limit=25');
     
     const idealResponse = response.data.map(anime => ({
       id: anime.mal_id,

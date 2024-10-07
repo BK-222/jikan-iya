@@ -1,13 +1,19 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
+import animeSeries from '@/data/anime-series.json';
 
 const useAnimeListStore = defineStore('animeList', () => {
   const mainstreamAnimes = ref([]);
   const iyashikeiAnimes = ref([]);
+  const animeSeries = ref({});
 
-  const animeSeries = reactive({
-    34798: []
-  });
+  const getAnimeSeries = (id) => {
+    const numericId = parseInt(id); // converts string to number
+    const seriesKey = Object.keys(animeSeries).find(key =>
+      animeSeries[key].includes(numericId)
+    );
+    return animeSeries[seriesKey] || [];
+  }
 
   const getAnimeById = (id) => {
     const animeId =
@@ -43,7 +49,7 @@ const useAnimeListStore = defineStore('animeList', () => {
   }
 
   return { mainstreamAnimes, iyashikeiAnimes,
-    getAnimeById, getUniqueAnimes,
+    getAnimeById, getUniqueAnimes, getAnimeSeries,
     setMainstreamAnimes, setIyashikeiAnimes
   }
 });

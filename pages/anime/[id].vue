@@ -1,17 +1,20 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router';
+import useAnimeListStore from '@/stores/AnimeList';
 
 const route = useRoute();
 const router = useRouter();
-
+const store = useAnimeListStore();
 const animeId = ref(route.params.id);
 
 const { data: animeDetails, error, pending } = await useAsyncData(`animeDetailsData-${animeId}`, () => {
   return $fetch(`/api/anime/${animeId.value}`)
 });
 
-console.log('Fetched anime details:', animeDetails);
+const animeSeries = store.getAnimeSeries(animeId.value);
 
+console.log('Related anime series:', animeSeries);
+console.log('Fetched anime details:', animeDetails);
 const goBack = () => { router.back() }
 
 </script>
@@ -28,6 +31,12 @@ const goBack = () => { router.back() }
       <ul>
         <li v-for="season in animeDetails.seasons" :key="season.mal_id">
           Season: {{ season.name }}
+        </li>
+      </ul>
+      <h3>Related Anime:</h3>
+      <ul class="flex gap-x-2">
+        <li v-for="relatedAnime in animeSeries" :key="relatedAnime">
+          <router-link :to="`/anime/${relatedAnime}`">Anime: {{ relatedAnime }}</router-link>
         </li>
       </ul>
         <BaseButton @click="goBack()" class="self-center">Back to Anime List</BaseButton>
