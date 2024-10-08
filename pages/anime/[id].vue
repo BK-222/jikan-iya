@@ -11,10 +11,18 @@ const { data: animeDetails, error, pending } = await useAsyncData(`animeDetailsD
   return $fetch(`/api/anime/${animeId.value}`)
 });
 
-const animeSeries = store.getAnimeSeries(animeId.value);
+const animeSeries = computed(() => store.getAnimeSeries(animeId.value));
 
-console.log('Related anime series:', animeSeries);
-console.log('Fetched anime details:', animeDetails);
+const { data: animeSeriesDetails, error: seriesError, pending: seriesPending } = await useAsyncData(`relatedAnimeData-${animeId}`, async () => {
+  if (animeSeries.value && animeSeries.value.length > 0) {
+    return animeSeries.value;
+  } else {
+    const relatedAnime = await $fetch(`/api/anime/related/${animeId.value}`);
+    store.setAnimeSeries(animeId.value, relatedAnime);
+    return relatedAnime;
+  }
+});
+
 const goBack = () => { router.back() }
 
 </script>
@@ -33,13 +41,22 @@ const goBack = () => { router.back() }
           Season: {{ season.name }}
         </li>
       </ul>
+
+      
       <h3>Related Anime:</h3>
-      <ul class="flex gap-x-2">
-        <li v-for="relatedAnime in animeSeries" :key="relatedAnime">
-          <router-link :to="`/anime/${relatedAnime}`">Anime: {{ relatedAnime }}</router-link>
+      <div v-if="seriesError">{{ seriesError.message }}</div>
+      <div v-else-if="relatedPending">Loading related anime...</div>
+      <ul class="flex gap-x-2" v-else>
+        <li v-for="relatedAnime in animeSeriesDetails" :key="relatedAnime.id">
+          <router-link :to="`/anime/${relatedAnime.id}`">
+            <img :src="relatedAnime.image" :alt="relatedAnime.name" class="w-16 h-16" />
+            <span>{{ relatedAnime.name }}</span>
+          </router-link>
         </li>
       </ul>
-        <BaseButton @click="goBack()" class="self-center">Back to Anime List</BaseButton>
+
+
+      <BaseButton @click="goBack()" class="self-center">Back to Anime List</BaseButton>
     </div>
   </div>
 </template>

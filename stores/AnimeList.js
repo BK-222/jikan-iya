@@ -1,19 +1,11 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import animeSeries from '@/data/anime-series.json';
+import animeSeriesData from '@/data/anime-series.json';
 
 const useAnimeListStore = defineStore('animeList', () => {
   const mainstreamAnimes = ref([]);
   const iyashikeiAnimes = ref([]);
-  const animeSeries = ref({});
-
-  const getAnimeSeries = (id) => {
-    const numericId = parseInt(id); // converts string to number
-    const seriesKey = Object.keys(animeSeries).find(key =>
-      animeSeries[key].includes(numericId)
-    );
-    return animeSeries[seriesKey] || [];
-  }
+  const animeSeries = ref({animeSeriesData});
 
   const getAnimeById = (id) => {
     const animeId =
@@ -38,19 +30,25 @@ const useAnimeListStore = defineStore('animeList', () => {
     });
   }
 
+  const getAnimeSeries = (id) => {
+    return animeSeries.value[id] || [];
+  };
+
   const setMainstreamAnimes = function(animeList) {
-    console.log('Setting mainstream animes:', animeList);
     mainstreamAnimes.value = animeList;
-    console.log('Updated mainstream animes:', mainstreamAnimes.value);
   }
 
   const setIyashikeiAnimes = function(animeList) {
     iyashikeiAnimes.value = animeList;
   }
 
+  const setAnimeSeries = function(id, data) {
+    animeSeries.value[id] = data;
+  }
+
   return { mainstreamAnimes, iyashikeiAnimes,
     getAnimeById, getUniqueAnimes, getAnimeSeries,
-    setMainstreamAnimes, setIyashikeiAnimes
+    setMainstreamAnimes, setIyashikeiAnimes, setAnimeSeries
   }
 });
 

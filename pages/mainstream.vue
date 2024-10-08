@@ -10,7 +10,6 @@ const { data, error, pending: isLoading } = await useAsyncData('mainstreamData',
   if (store.mainstreamAnimes.length === 0) {
     return $fetch('/api/mainstream'); // Call the API endpoint
   } else {
-    console.log('Returning cached data...'); // <--- NEW LOG STATEMENT
     return Promise.resolve(store.mainstreamAnimes);
   }
 });
