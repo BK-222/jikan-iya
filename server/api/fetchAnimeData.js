@@ -1,6 +1,6 @@
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-const fetchAnimeData = defineEventHandler(async (event) => {
+const fetchAllAnimeData = defineEventHandler(async () => {
   let allAnime = [];
   let currentPage = 1;
   let hasMoreData = true;
@@ -8,41 +8,32 @@ const fetchAnimeData = defineEventHandler(async (event) => {
   try {
     while (hasMoreData) {
       const response = await $fetch(`https://api.jikan.moe/v4/anime?genres=63&limit=25&page=${currentPage}`);
+      console.log('API Response:', response); // Log the API response to check for any issues
 
       if (response.data && response.data.length > 0) {
         allAnime = [...allAnime, ...response.data];
         currentPage++;
-        await delay(700);
+        await delay(1000);
       } else {
         hasMoreData = false;
-        // console.log('No more data available, stopping pagination');
       }
     }
 
-    const idealResponse = allAnime.reduce((acc, anime) => {
+    const idealResponse = allAnime.map(anime => ({
+      id: anime.mal_id,
+      name: anime.title,
+      image: anime.images.jpg.image_url,
+      genre: anime.genres.map(genre => genre.name),
+      type: anime.type
+    }));
 
-      if (!acc[mainTitle]) {
-        acc[mainTitle] = {
-          id: anime.mal_id,
-          name: anime.title,
-          image: anime.images.jpg.image_url,
-          genre: anime.genres,
-          type: anime.type,
-          seasons: []
-        }
-      }
-      acc[mainTitle].seasons.push(anime);
-      return acc;
-      
-    }, {});
-
-    return Object.values(idealResponse);
+    return idealResponse;
   } catch (error) {
     throw createError({
       statusCode: 500,
-      message: 'Failed to fetch Iyashikei anime. Please check server logs for more details.',
+      message: 'Failed to fetch anime. Please check the server logs for more details.',
     });
   }
 });
 
-export default fetchAnimeData;
+export default fetchAllAnimeData;

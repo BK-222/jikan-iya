@@ -25,7 +25,7 @@ const fetchAnimeData = defineEventHandler(async (event) => {
       image: data.images.jpg.image_url,
       genre: data.genres,
       related: data.related
-    }));console.log(idealResponse);
+    }));
     
     return idealResponse;
 
