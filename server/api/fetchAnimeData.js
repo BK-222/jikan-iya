@@ -8,12 +8,11 @@ const fetchAllAnimeData = defineEventHandler(async () => {
   try {
     while (hasMoreData) {
       const response = await $fetch(`https://api.jikan.moe/v4/anime?genres=63&limit=25&page=${currentPage}`);
-      console.log('API Response:', response); // Log the API response to check for any issues
 
       if (response.data && response.data.length > 0) {
         allAnime = [...allAnime, ...response.data];
         currentPage++;
-        await delay(1000);
+        await delay(800);
       } else {
         hasMoreData = false;
       }

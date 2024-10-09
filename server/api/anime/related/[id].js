@@ -20,7 +20,7 @@ const fetchRelatedAnime = defineEventHandler(async (event) => {
         name: response.data.title,
         image: response.data.images.jpg.image_url,
       });
-      await delay(750); // Delay to stay within rate limits
+      await delay(850); // Delay to stay within rate limits
     }
     
     return responses;

@@ -3,17 +3,17 @@ import useAnimeDataStore from '@/stores/AnimeData';
 
 const store = useAnimeDataStore();
 
-const { data, error, pending: isLoading } = await useAsyncData('mainstreamData', () => {
-  if (store.allAnime.length === 0) {
-    return $fetch('/api/mainstream');
-  } else {
-    return store.allAnime;
-  }
-});
+// const { data, error, pending: isLoading } = await useAsyncData('mainstreamData', () => {
+//   if (store.allAnime.length === 0) {
+//     return $fetch('/api/mainstream');
+//   } else {
+//     return store.allAnime;
+//   }
+// });
 
-if (data.value && store.allAnime.length === 0) {
-  store.setAllAnime(data.value);
-}
+// if (data.value && store.allAnime.length === 0) {
+//   store.setAllAnime(data.value);
+// }
 
 const mainstreamAnimeIds = [34798, 4081, 457, 17549];
 

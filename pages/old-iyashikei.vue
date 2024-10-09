@@ -16,17 +16,6 @@ if (data.value && store.iyashikeiAnimes.length === 0) {
   store.setIyashikeiAnimes(data.value);
 }
 
-// const { data, error } = await useAsyncData('iyashikeiData', async () => {
-//   let fetchedData;
-//   fetchedData = await $fetch('/api/iyashikei');
-//   if (store.iyashikeiAnimes.length === 0) {
-//     store.setIyashikeiAnimes(fetchedData);
-//   } else {
-//     fetchedData = store.iyashikeiAnimes;
-//   }
-//   return fetchedData;
-// });
-
 const iyashikeiAnimes = computed(() => {
   return store.iyashikeiAnimes;
 });
