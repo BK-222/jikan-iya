@@ -2,25 +2,23 @@
 import useAnimeDataStore from '@/stores/AnimeData.js';
 
 const store = useAnimeDataStore();
-// const isLoading = ref(true);
+const isLoading = ref(true);
 
-// const { data, error } = await useAsyncData('iyashikeiData', () => {
-//   if (store.iyashikeiAnimes.length === 0) {
-//     return $fetch('/api/iyashikei');
-//   } else {
-//     return store.iyashikeiAnimes;
-//   }
-// });
+const { data, error } = await useAsyncData('iyashikeiData', () => {
+  if (store.allAnime.length === 0) {
+    return $fetch('/api/iyashikei');
+  } else {
+    return store.allAnime;
+  }
+});
 
-// if (data.value && store.iyashikeiAnimes.length === 0) {
-//   store.setIyashikeiAnimes(data.value);
-// }
-
+if (data.value && store.allAnime.length === 0) {
+  store.setAllAnime(data.value);
+}
 
 const iyashikeiAnime = computed(() => {
   return store.getIyashikeiAnime();
 });
-console.log("Iyashikei Anime Data:", iyashikeiAnime.value);
 </script>
 
 <template :key="data.length">

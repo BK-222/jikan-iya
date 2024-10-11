@@ -7,6 +7,9 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@nuxt/image'
   ],
+  router: {
+    middleware: ['fetchAnime']
+  },
   css: ['@/assets/css/main.css'],
   postcss: {
     plugins: {

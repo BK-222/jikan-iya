@@ -21,10 +21,6 @@ const mainstreamAnime = computed(() => {
   return store.getMainstreamAnime(mainstreamAnimeIds);
 });
 
-// const mainstreamAnimes = computed(() => {
-//   return store.mainstreamAnimes;
-// });
-
 </script>
 
 <template>
