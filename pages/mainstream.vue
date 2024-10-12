@@ -3,9 +3,9 @@ import useAnimeDataStore from '@/stores/AnimeData';
 
 const store = useAnimeDataStore();
 
-definePageMeta({
-  middleware: 'fetch-anime-data'
-});
+// definePageMeta({
+//   middleware: 'fetch-anime-data'
+// });
 
 // const { data, error, pending: isLoading } = await useAsyncData('mainstreamData', () => {
 //   if (store.allAnime.length === 0) {

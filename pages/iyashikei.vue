@@ -3,9 +3,9 @@ import useAnimeDataStore from '@/stores/AnimeData.js';
 
 const store = useAnimeDataStore();
 
-definePageMeta({
-  middleware: 'fetch-anime-data'
-});
+// definePageMeta({
+//   middleware: 'fetch-anime-data'
+// });
 // const isLoading = ref(true);
 
 // const { data, error } = await useAsyncData('iyashikeiData', () => {
