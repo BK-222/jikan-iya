@@ -18,7 +18,7 @@ const iyashikeiAnime = computed(() => {
     <ul class="flex flex-row flex-wrap" v-else>
       <AnimeItem v-for="anime in iyashikeiAnime" :key="anime.id" :anime="anime"></AnimeItem>
     </ul>
-    <NuxtLink to="/">
+    <NuxtLink class="flex justify-center" to="/">
       <BaseButton class="self-center">Back to main</BaseButton>
     </NuxtLink>
   </div>

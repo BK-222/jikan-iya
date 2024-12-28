@@ -5,6 +5,7 @@ import useAnimeDataStore from '@/stores/AnimeData';
 const route = useRoute();
 const router = useRouter();
 const store = useAnimeDataStore();
+
 const animeId = ref(route.params.id);
 
 const animeDetails = computed(() => store.getAnimeById(animeId.value));
@@ -54,7 +55,7 @@ const goBack = () => { router.back() }
       <ul class="flex gap-x-2">
         <li v-for="relatedAnime in animeSeries" :key="relatedAnime.id">
           <router-link :to="`/anime/${relatedAnime.id}`">
-            <img :src="relatedAnime.image" :alt="relatedAnime.name" class="w-20 h-24" />
+            <NuxtImg :src="relatedAnime.image" :alt="relatedAnime.name" class="w-20 h-24" />
             <span>{{ relatedAnime.name }}</span>
           </router-link>
         </li>

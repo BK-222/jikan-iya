@@ -22,7 +22,7 @@ const fetchAllAnimeData = defineEventHandler(async () => {
       id: anime.mal_id,
       name: anime.title,
       image: anime.images.jpg.image_url,
-      genre: anime.genres.map(genre => genre.name),
+      genres: anime.genres.map(genre => genre.name),
       type: anime.type
     }));
 

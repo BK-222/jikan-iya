@@ -25,7 +25,7 @@ const mainstreamAnime = computed(() => {
     <ul v-else class="flex flex-row justify-center space-x-2">
       <AnimeItem v-for="anime in mainstreamAnime" :key="anime.id" :anime="anime"></AnimeItem>
     </ul>
-    <NuxtLink to="/">
+    <NuxtLink class="flex justify-center" to="/">
       <BaseButton class="self-center">Back to main</BaseButton>
     </NuxtLink>
   </div>
