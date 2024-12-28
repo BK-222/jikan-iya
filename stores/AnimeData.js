@@ -5,6 +5,7 @@ import animeSeriesData from '@/data/anime-series.json';
 const useAnimeDataStore = defineStore('animeData', () => {
   const allAnime = ref([]);
   const isLoaded = ref(false);
+  const isMiddlewareExecuted = ref(false);
 
   const getMainstreamAnime = (mainstreamAnimeIds) => {
     return allAnime.value.filter(anime => mainstreamAnimeIds.includes(anime.id))
@@ -35,12 +36,33 @@ const useAnimeDataStore = defineStore('animeData', () => {
       }, {}));
     };
 
+    const getAnimeSeries = (id) => {
+      const seriesKey = Object.keys(animeSeriesData).find((key) =>
+        animeSeriesData[key].includes(parseInt(id))
+      );
+      const relatedIds = animeSeriesData[seriesKey] || [];
+      // Map related IDs to `allAnime`
+      return relatedIds
+      .map((relatedId) => getAnimeById(relatedId))
+      .filter((anime) => anime); // Filter out nulls if some IDs are missing
+    }
+
+    const getAnimeById = (id) => {
+      const animeId = allAnime.value.find(anime => anime.id === parseInt(id));
+      return animeId;
+    }
+
     const setAllAnime = function(animeList) {
       allAnime.value = animeList;
       isLoaded.value = true;
     }
 
-  return { allAnime, getMainstreamAnime, getIyashikeiAnime, setAllAnime };
+    const setMiddlewareExecuted = function() {
+      isMiddlewareExecuted.value = true;
+    }
+
+  return { allAnime, isLoaded, isMiddlewareExecuted, getMainstreamAnime, getIyashikeiAnime, getAnimeSeries,
+    getAnimeById, setAllAnime, setMiddlewareExecuted }; 
 });
 
 export default useAnimeDataStore;

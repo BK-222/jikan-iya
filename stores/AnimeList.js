@@ -6,6 +6,7 @@ const useAnimeListStore = defineStore('animeList', () => {
   const mainstreamAnimes = ref([]);
   const iyashikeiAnimes = ref([]);
   const animeSeries = ref({animeSeriesData});
+  // const animeSeries = ref({animeSeriesData});
 
   const getAnimeById = (id) => {
     const animeId =

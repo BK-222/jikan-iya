@@ -4,14 +4,16 @@ import useAnimeDataStore from '@/stores/AnimeData';
 
 const store = useAnimeDataStore();
 
-const { data, error } = await useAsyncData('allAnimeData', () => {
+const { data, error } = await useAsyncData('allAnimeData', async () => {
   if (store.allAnime.length === 0) {
-    return $fetch('/api/fetchAnimeData');
+    const response = await $fetch('/api/fetchAnimeData');
+    return response;
   } else {
     return store.allAnime;
   }
 });
 
+// Safely update the store after data is resolved
 if (data.value && store.allAnime.length === 0) {
   store.setAllAnime(data.value);
 }
