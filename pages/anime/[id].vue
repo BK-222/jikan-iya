@@ -11,25 +11,11 @@ const animeId = ref(route.params.id);
 const animeDetails = computed(() => store.getAnimeById(animeId.value));
 const animeSeries = computed(() => store.getAnimeSeries(animeId.value));
 
-// watch(() => route.params.id, (newId) => {
-//   animeId.value = newId;
-// });
-
 watchEffect(() => {
   console.log('Anime ID:', animeId.value);
   console.log('Anime Details:', animeDetails.value);
   console.log('All Anime:', store.allAnime);
 });
-
-// const { data: animeSeriesDetails, error: seriesError, pending: seriesPending } = await useAsyncData(`relatedAnimeData-${animeId}`, async () => {
-//   if (animeSeries.value && animeSeries.value.length > 0) {
-//     return animeSeries.value;
-//   } else {
-//     const relatedAnime = await $fetch(`/api/anime/related/${animeId.value}`);
-//     listStore.setAnimeSeries(animeId.value, relatedAnime);
-//     return relatedAnime;
-//   }
-// });
 
 const goBack = () => { router.back() }
 
@@ -55,8 +41,10 @@ const goBack = () => { router.back() }
       <ul class="flex gap-x-2">
         <li v-for="relatedAnime in animeSeries" :key="relatedAnime.id">
           <router-link :to="`/anime/${relatedAnime.id}`">
-            <NuxtImg :src="relatedAnime.image" :alt="relatedAnime.name" class="w-20 h-24" />
-            <span>{{ relatedAnime.name }}</span>
+            <div class="flex flex-col w-28">
+              <NuxtImg :src="relatedAnime.image" :alt="relatedAnime.name" class="w-20 h-24 self-center" />
+              <span class="text-center">{{ relatedAnime.name }}</span>
+            </div>
           </router-link>
         </li>
       </ul>

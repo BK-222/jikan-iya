@@ -9,6 +9,9 @@ const fetchAnimeData = defineNuxtRouteMiddleware(async (to, from) => {
   const { data, error } = await useAsyncData('allAnimeData', () => {
     if (store.allAnime.length === 0) {
       return $fetch('/api/fetchAnimeData');
+    } else if (error) {
+      console.error('Error fetching anime data:', error);
+      return navigateTo('/error');
     } else {
       return store.allAnime;
     }
