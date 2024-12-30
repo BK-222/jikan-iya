@@ -1,17 +1,34 @@
 import { defineStore } from 'pinia';
 
+let timer;
 const useAuthenticationStore = defineStore('auth', {
   state: () => ({
-    email: null,
-    password: null,
     userId: null,
-    token: null
+    token: null,
+    didAutoLogout: false
   }),
+  getters: {
+    userId(state) {
+      return state.userId;
+    },
+    token(state) {
+      return state.token;
+    },
+    isAuthenticated(state) {
+      return !!state.token;
+    },
+    didAutoLogout(state) {
+      return state.didAutoLogout;
+    }
+  },
   actions: {
-    setEmail(email) {
-      this.email = email;
+    signUp: async function(email, password) {
+      return this.auth({ email, password, mode: 'signup' });
+    },
+    logIn: async function(email, password) {
+      return this.auth({ email, password, mode: 'login' });
     }
   }
 });
 
-export default useAuthenticationStore; 
+export default useAuthenticationStore;
