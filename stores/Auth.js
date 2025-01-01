@@ -32,6 +32,7 @@ const useAuthenticationStore = defineStore('auth', {
     },
     auth: async function({ email, password, mode }) {
       const supabase = useNuxtApp().$supabase;
+      
       let response;
       if (mode === 'signup') {
         response = await this.$nuxt.$supabase.auth.signUp({ email, password });
@@ -43,7 +44,11 @@ const useAuthenticationStore = defineStore('auth', {
       if (error) {
         throw new Error(error.message);
       }
-      this.setAuth(session.access_token, user.id, session.expires_in);
+      if (session && session.access_token) {
+        this.setAuth(session.access_token, user.id, session.expires_in);
+      } else {
+        throw new Error('Failed to retrieve authentication token.');
+      }
     },
     logout() {
       clearTimeout(timer);
