@@ -29,4 +29,5 @@ if (data.value && store.allAnime.length === 0) {
     <NuxtLink to="/mainstream">mainstream</NuxtLink>
     <br>
     <NuxtLink to="/iyashikei">iyashikei</NuxtLink>
+    
 </template>

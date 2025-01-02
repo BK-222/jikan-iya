@@ -12,6 +12,7 @@ const isLoading = ref(false);
 const error = ref(null);
 
 const submitForm = async () => {
+  this.isFormValid = true;
   if (userDetails.email === '' || !userDetails.email.includes('@') || userDetails.password.length < 6) {
     isFormValid.value = false;
     return;
