@@ -12,7 +12,7 @@ const isLoading = ref(false);
 const error = ref(null);
 
 const submitForm = async () => {
-  this.isFormValid = true;
+  isFormValid.value = true;
   if (userDetails.email === '' || !userDetails.email.includes('@') || userDetails.password.length < 6) {
     isFormValid.value = false;
     return;
@@ -24,6 +24,14 @@ const submitForm = async () => {
     email: userDetails.email, 
     password: userDetails.password
   }
+
+  try {
+    await store.signUp(actionPayload);
+    console.log('Signup Successful');
+  } catch (err) {
+    console.error('Error during Signup:', err.message); 
+    error.value = err.message || 'Failed to authenticate, try later.';
+  }
 }
 </script>
 <template>
@@ -31,13 +39,13 @@ const submitForm = async () => {
     <BaseForm @submit.prevent="submitForm">
       <div>
         <label for="email">Email:</label>
-        <input type="email" id="email" v-model.trim="email" />
+        <input type="email" id="email" v-model.trim="userDetails.email" />
       </div>
       <div>
         <label for="password">Password:</label>
-        <input type="password" id="password" v-model.trim="password" />
+        <input type="password" id="password" v-model.trim="userDetails.password" />
       </div>
-      <p v-if="!formIsValid">
+      <p v-if="!isFormValid">
         Please enter a valid email and a password of at least 6 characters.
       </p>
       <BaseButton>Submit</BaseButton>

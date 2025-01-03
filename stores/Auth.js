@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { supabase } from '@/plugins/supabase';
+// import { supabase } from '@/plugins/supabase';
 
 const useAuthenticationStore = defineStore('auth', {
   state: () => ({
@@ -8,10 +8,10 @@ const useAuthenticationStore = defineStore('auth', {
     didAutoLogout: false
   }),
   getters: {
-    userId(state) {
+    getUserId(state) {
       return state.userId;
     },
-    token(state) {
+    getToken(state) {
       return state.token;
     },
     isAuthenticated(state) {
@@ -31,33 +31,37 @@ const useAuthenticationStore = defineStore('auth', {
     auth: async function({ email, password, mode }) {
       const { $supabase } = useNuxtApp();
       
+      console.log('Store Auth Payload:', { email, password, mode });
       let response;
-      if (mode === 'signup') {
-        response = await this.$nuxt.$supabase.auth.signUp({ email, password });
-      } else {
-        response = await this.$nuxt.$supabase.auth.signIn({ email, password });
+      try {
+        if (mode === 'signup') {
+          response = await $supabase.auth.signUp({ email, password });
+        } else {
+          response = await $supabase.auth.signInWithPassword({ email, password });
+        }
+      } catch (err) {
+        console.error('Supabase API Error:', err);
+        throw new Error('Something went wrong with the Supabase request.');
       }
 
-      // const { user, sessions, error } = response;
+      // const { user, session, error } = response;
 
-      // if (error) {
-      //   throw new Error(error.message);
-      // }
+      const user = response.data?.user;
+      const session = response.data?.session;
+      const error = response.error;
 
-      const { user, session, error } = response;
-     
       if (error) {
+        console.error('Supabase Error:', error.message); // Add this line
         throw new Error(error.message);
       }
-      // if (session && session.access_token) {
-      //   this.setAuth(session.access_token, user.id, session.expires_in);
-      // } else {
-      //   throw new Error('Failed to retrieve authentication token.');
-      // }
 
-      if (session?.access_token) {
+      if (session?.access_token) { // the same as session && session.access_token
+        console.log('Session obtained:', session);
         this.setAuth(session.access_token, user.id, session.expires_in);
+      } else if (user) {
+        throw new Error('Account created. Please check your email to confirm your account.');
       } else {
+        console.error('Signup user:', user);
         throw new Error('Failed to retrieve authentication token.');
       }
     },
