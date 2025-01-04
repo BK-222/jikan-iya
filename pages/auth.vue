@@ -11,7 +11,7 @@ const isFormValid = ref(true);
 const isLoading = ref(false);
 const error = ref(null);
 
-const submitForm = async () => {
+const submitForm = async function() {
   isFormValid.value = true;
   if (userDetails.email === '' || !userDetails.email.includes('@') || userDetails.password.length < 6) {
     isFormValid.value = false;
@@ -26,12 +26,16 @@ const submitForm = async () => {
   }
 
   try {
-    await store.signUp(actionPayload);
+    await store.signup(actionPayload);
     console.log('Signup Successful');
   } catch (err) {
     console.error('Error during Signup:', err.message); 
     error.value = err.message || 'Failed to authenticate, try later.';
   }
+}
+
+const logout = function() {
+  store.logout();
 }
 </script>
 <template>
@@ -50,6 +54,7 @@ const submitForm = async () => {
       </p>
       <BaseButton>Submit</BaseButton>
     </BaseForm>
+    <BaseButton @click="logout">Logout</BaseButton>
     <p v-if="error">Error: {{ error.message }}</p>
   </div>
 </template>

@@ -14,24 +14,20 @@ const useAuthenticationStore = defineStore('auth', {
     getToken(state) {
       return state.token;
     },
-    isAuthenticated(state) {
-      return !!state.token;
-    },
-    didAutoLogout(state) {
+    getDidAutoLogout(state) {
       return state.didAutoLogout;
     }
   },
   actions: {
-    logIn: async function(payload) {
+    login: async function(payload) {
       return this.auth({ ...payload, mode: 'login' });
     },
-    signUp: async function(payload) {
+    signup: async function(payload) {
       return this.auth({ ...payload, mode: 'signup' });
     },
     auth: async function({ email, password, mode }) {
       const { $supabase } = useNuxtApp();
       
-      console.log('Store Auth Payload:', { email, password, mode });
       let response;
       try {
         if (mode === 'signup') {
@@ -40,18 +36,14 @@ const useAuthenticationStore = defineStore('auth', {
           response = await $supabase.auth.signInWithPassword({ email, password });
         }
       } catch (err) {
-        console.error('Supabase API Error:', err);
         throw new Error('Something went wrong with the Supabase request.');
       }
 
-      // const { user, session, error } = response;
-
-      const user = response.data?.user;
-      const session = response.data?.session;
-      const error = response.error;
+      const { user, session } = response.data || {};
+      const { error } = response;
 
       if (error) {
-        console.error('Supabase Error:', error.message); // Add this line
+        console.error('Supabase Error:', error.message);
         throw new Error(error.message);
       }
 
@@ -61,7 +53,6 @@ const useAuthenticationStore = defineStore('auth', {
       } else if (user) {
         throw new Error('Account created. Please check your email to confirm your account.');
       } else {
-        console.error('Signup user:', user);
         throw new Error('Failed to retrieve authentication token.');
       }
     },
