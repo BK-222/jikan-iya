@@ -1,5 +1,5 @@
 <script setup>
-import useAuthStore from '@/stores/Auth';
+import useAuthStore from '~/stores/auth';
 
 const store = useAuthStore();
 
@@ -10,6 +10,10 @@ const userDetails = reactive({
 const isFormValid = ref(true);
 const isLoading = ref(false);
 const error = ref(null);
+
+const isLoggedIn = computed(() => {
+  return store.isAuthenticated;
+});
 
 const submitForm = async function() {
   isFormValid.value = true;
@@ -55,6 +59,9 @@ const logout = function() {
       <BaseButton>Submit</BaseButton>
     </BaseForm>
     <BaseButton @click="logout">Logout</BaseButton>
+    <p v-if="isLoggedIn">
+      <NuxtLink to="/secret">secret</NuxtLink>
+    </p>
     <p v-if="error">Error: {{ error.message }}</p>
   </div>
 </template>

@@ -1,6 +1,6 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router';
-import useAnimeDataStore from '~/stores/AnimeData';
+import useAnimeDataStore from '~/stores/anime-data';
 
 const route = useRoute();
 const router = useRouter();

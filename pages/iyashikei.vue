@@ -1,5 +1,5 @@
 <script setup>
-import useAnimeDataStore from '~/stores/AnimeData.js';
+import useAnimeDataStore from '~/stores/anime-data.js';
 
 const store = useAnimeDataStore();
 

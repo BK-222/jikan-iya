@@ -1,4 +1,4 @@
-import useAnimeDataStore from '~/stores/AnimeData';
+import useAnimeDataStore from '~/stores/anime-data';
 
 const fetchAnimeData = defineNuxtRouteMiddleware(async (to, from) => {
   const store = useAnimeDataStore();

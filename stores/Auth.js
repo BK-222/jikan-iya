@@ -14,7 +14,10 @@ const useAuthenticationStore = defineStore('auth', {
     getToken(state) {
       return state.token;
     },
-    getDidAutoLogout(state) {
+    isAuthenticated(state) {
+      return !!state.token;
+    },
+    didAutoLogout(state) {
       return state.didAutoLogout;
     }
   },

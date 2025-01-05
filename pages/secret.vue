@@ -1,5 +1,5 @@
 <script setup>
-import useAuthStore from '@/stores/Auth';
+import useAuthStore from '~/stores/auth';
 import { useRouter } from 'vue-router';
 
 const store = useAuthStore();
@@ -17,8 +17,8 @@ const logout = function() {
   <div>
     <h1>Secret Page</h1>
     <p>Welcome to the secret page, only accessible to authenticated users!</p>
-    <li v-if="isLoggedIn">
+    <!-- <li v-if="isLoggedIn"> -->
       <base-button @click="logout">Logout</base-button>
-    </li>
+    <!-- </li> -->
   </div>
 </template>
