@@ -5,6 +5,8 @@ import { useRouter } from 'vue-router';
 const store = useAuthStore();
 const router = useRouter();
 
+const isLoggedIn = computed(() => store.isLoggedIn);
+
 const logout = function() {
   store.logout();
   router.replace('/login');
@@ -15,6 +17,8 @@ const logout = function() {
   <div>
     <h1>Secret Page</h1>
     <p>Welcome to the secret page, only accessible to authenticated users!</p>
-    <base-button @click="logout">Logout</base-button>
+    <li v-if="isLoggedIn">
+      <base-button @click="logout">Logout</base-button>
+    </li>
   </div>
 </template>
