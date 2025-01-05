@@ -2,6 +2,10 @@
 import useAuthStore from '~/stores/auth';
 import { useRouter } from 'vue-router';
 
+definePageMeta({
+  middleware: 'auth-guard',
+});
+
 const store = useAuthStore();
 const router = useRouter();
 
