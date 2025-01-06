@@ -5,7 +5,7 @@ const store = useAnimeDataStore();
 
 const { data, error } = await useAsyncData('allAnimeData', async () => {
   if (store.allAnime.length === 0) {
-    const response = await $fetch('/api/fetchAnimeData');
+    const response = await $fetch('/api/fetch-anime-data');
     return response;
   } else {
     return store.allAnime;
@@ -28,5 +28,7 @@ if (data.value && store.allAnime.length === 0) {
     <NuxtLink to="/mainstream">mainstream</NuxtLink>
     <br>
     <NuxtLink to="/iyashikei">iyashikei</NuxtLink>
+    <br>
+    <NuxtLink to="/auth">auth</NuxtLink>
     
 </template>
