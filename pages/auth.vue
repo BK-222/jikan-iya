@@ -7,6 +7,7 @@ const userDetails = reactive({
   email: '',
   password: ''
 });
+
 const isFormValid = ref(true);
 const mode = ref('login');
 const isLoading = ref(false);
@@ -16,11 +17,11 @@ const isLoggedIn = computed(() => {
   return store.isAuthenticated;
 });
 
-const switchAuthMode = computed(() => {
+const switchModeButtonCaption = computed(() => {
   return mode.value === 'login' ? 'Signup' : 'Login';
 });
 
-const submitCaption = computed(() => {
+const submitButtonCaption = computed(() => {
   return mode.value === 'login' ? 'Login' : 'Signup';
 });
 
@@ -39,12 +40,16 @@ const submitForm = async function() {
   }
 
   try {
-    await store.signup(actionPayload);
+    mode.value === 'login' ? await store.login(actionPayload) : await store.signup(actionPayload);
     console.log('Signup Successful');
   } catch (err) {
     console.error('Error during Signup:', err.message); 
     error.value = err.message || 'Failed to authenticate, try later.';
   }
+}
+
+const switchAuthMode = function() {
+  mode.value === 'login' ? mode.value = 'signup' : mode.value = 'login';
 }
 
 const logout = function() {
@@ -65,14 +70,16 @@ const logout = function() {
       <p v-if="!isFormValid">
         Please enter a valid email and a password of at least 6 characters.
       </p>
-      <BaseButton>Signup</BaseButton>
+      <BaseButton>{{ submitButtonCaption }}</BaseButton>
     </BaseForm>
-    <p>already have an account?</p>
-    <BaseButton>{{  switchAuthMode }}</BaseButton>
-    <BaseButton @click="logout">Logout</BaseButton>
-    <p v-if="isLoggedIn">
-      <NuxtLink to="/secret">secret</NuxtLink>
-    </p>
-    <p v-if="error">Error: {{ error.message }}</p>
+    <div class="flex justify-center items-center">
+      <p>already have an account?</p>
+      <BaseButton @click="switchAuthMode">{{ switchModeButtonCaption }}</BaseButton>
+      <BaseButton @click="logout">Logout</BaseButton>
+      <p v-if="isLoggedIn">
+        <NuxtLink to="/secret">secret</NuxtLink>
+      </p>
+      <p v-if="error">Error: {{ error.message }}</p>
+    </div>
   </div>
 </template>
