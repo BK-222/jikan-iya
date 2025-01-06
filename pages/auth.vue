@@ -40,8 +40,13 @@ const submitForm = async function() {
   }
 
   try {
-    mode.value === 'login' ? await store.login(actionPayload) : await store.signup(actionPayload);
-    console.log('Signup Successful');
+    if (mode.value === 'login') {
+      await store.login(actionPayload);
+    } else {
+      await store.signup(actionPayload);
+    }
+    const redirectUrl = to.query.redirect || '/secret';
+    router.replace(redirectUrl);
   } catch (err) {
     console.error('Error during Signup:', err.message); 
     error.value = err.message || 'Failed to authenticate, try later.';
@@ -75,10 +80,10 @@ const logout = function() {
     <div class="flex justify-center items-center">
       <p>already have an account?</p>
       <BaseButton @click="switchAuthMode">{{ switchModeButtonCaption }}</BaseButton>
-      <BaseButton @click="logout">Logout</BaseButton>
-      <p v-if="isLoggedIn">
+      <div v-if="isLoggedIn">
+        <BaseButton @click="logout">Logout</BaseButton>
         <NuxtLink to="/secret">secret</NuxtLink>
-      </p>
+      </div>
       <p v-if="error">Error: {{ error.message }}</p>
     </div>
   </div>
