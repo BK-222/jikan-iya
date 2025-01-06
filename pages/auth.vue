@@ -8,11 +8,20 @@ const userDetails = reactive({
   password: ''
 });
 const isFormValid = ref(true);
+const mode = ref('login');
 const isLoading = ref(false);
 const error = ref(null);
 
 const isLoggedIn = computed(() => {
   return store.isAuthenticated;
+});
+
+const switchAuthMode = computed(() => {
+  return mode.value === 'login' ? 'Signup' : 'Login';
+});
+
+const submitCaption = computed(() => {
+  return mode.value === 'login' ? 'Login' : 'Signup';
 });
 
 const submitForm = async function() {
@@ -56,8 +65,10 @@ const logout = function() {
       <p v-if="!isFormValid">
         Please enter a valid email and a password of at least 6 characters.
       </p>
-      <BaseButton>Submit</BaseButton>
+      <BaseButton>Signup</BaseButton>
     </BaseForm>
+    <p>already have an account?</p>
+    <BaseButton>{{  switchAuthMode }}</BaseButton>
     <BaseButton @click="logout">Logout</BaseButton>
     <p v-if="isLoggedIn">
       <NuxtLink to="/secret">secret</NuxtLink>

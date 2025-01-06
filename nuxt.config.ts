@@ -2,10 +2,7 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
-  // ssr: true,
-  router: {
-    middleware: ['fetch-anime-data']
-  },
+  ssr: true,
   modules: [
     '@pinia/nuxt',
     '@nuxt/image'
