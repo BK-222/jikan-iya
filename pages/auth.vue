@@ -1,7 +1,10 @@
 <script setup>
 import useAuthStore from '~/stores/auth';
+import { useRouter, useRoute } from 'vue-router';
 
 const store = useAuthStore();
+const router = useRouter();
+const route = useRoute();
 
 const userDetails = reactive({
   email: '',
@@ -45,7 +48,7 @@ const submitForm = async function() {
     } else {
       await store.signup(actionPayload);
     }
-    const redirectUrl = to.query.redirect || '/secret';
+    const redirectUrl = (route.query.redirect || '/secret');
     router.replace(redirectUrl);
   } catch (err) {
     console.error('Error during Signup:', err.message); 

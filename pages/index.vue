@@ -17,7 +17,6 @@ if (data.value && store.allAnime.length === 0) {
   store.setAllAnime(data.value);
 }
 
-
 // if (animes.value) {
 //   store.setAnimes(animes.value);
 // }

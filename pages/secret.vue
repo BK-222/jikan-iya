@@ -13,7 +13,7 @@ const isLoggedIn = computed(() => store.isLoggedIn);
 
 const logout = function() {
   store.logout();
-  router.replace('/login');
+  router.replace('/');
 }
 </script>
 
