@@ -9,6 +9,11 @@ definePageMeta({
 const store = useAuthStore();
 const router = useRouter();
 
+console.log(
+  `Navigating to secret: isLoaded=${store.isLoaded}, allAnime.length=${store.allAnime ? store.allAnime.length : 'undefined'}`
+);
+console.log('Store state in secret.vue:', store);
+
 const isLoggedIn = computed(() => store.isLoggedIn);
 
 const logout = function() {
@@ -21,6 +26,7 @@ const logout = function() {
   <div>
     <h1>Secret Page</h1>
     <p>Welcome to the secret page, only accessible to authenticated users!</p>
+    <NuxtLink to="/mainstream">mainstream</NuxtLink>
     <!-- <li v-if="isLoggedIn"> -->
       <base-button @click="logout">Logout</base-button>
     <!-- </li> -->

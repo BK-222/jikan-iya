@@ -5,7 +5,7 @@ const useAuthenticationStore = defineStore('auth', {
   state: () => ({
     userId: null,
     token: null,
-    didAutoLogout: false
+    autoLogout: false
   }),
   getters: {
     getUserId(state) {
@@ -18,7 +18,7 @@ const useAuthenticationStore = defineStore('auth', {
       return !!state.token;
     },
     didAutoLogout(state) {
-      return state.didAutoLogout;
+      return state.autoLogout;
     }
   },
   actions: {
@@ -83,7 +83,7 @@ const useAuthenticationStore = defineStore('auth', {
 
       localStorage.removeItem('token');
       localStorage.removeItem('userId');
-  
+
       this.token = null;
       this.userId = null;
     }

@@ -53,6 +53,9 @@ const useAnimeDataStore = defineStore('animeData', () => {
     }
 
     const setAllAnime = function(animeList) {
+      if (allAnime.value.length > 0) {
+        return;
+      }
       allAnime.value = animeList;
       isLoaded.value = true;
     }
