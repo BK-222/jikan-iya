@@ -17,7 +17,7 @@ if (data.value && store.allAnime.length === 0) {
   store.setAllAnime(data.value);
 }
 
-// if (animes.value) {
+// if (animes.value) {  //sends to /error 404 on localhost:3000
 //   store.setAnimes(animes.value);
 // }
 </script>

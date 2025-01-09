@@ -83,7 +83,8 @@ const logout = function() {
       <BaseButton>{{ submitButtonCaption }}</BaseButton>
     </BaseForm>
     <div class="flex justify-center items-center">
-      <p>Don't yet have an account?</p>
+      <p v-if="mode === 'login'">Don't yet have an account?</p>
+      <p v-else>Already have an account?</p>
       <BaseButton @click="switchAuthMode">{{ switchModeButtonCaption }}</BaseButton>
       <div v-if="isLoggedIn">
         <BaseButton @click="logout">Logout</BaseButton>

@@ -39,9 +39,10 @@ const fetchAnimeData = defineNuxtRouteMiddleware(async (to, from) => {
   // if (store.isMiddlewareExecuted) { return } // checking the flag for the executed middleware
   
   // Fetch anime data only if the store is empty
-  const { data, error } = await useAsyncData('allAnimeData', () => {
+
+  const { data, error } = await useAsyncData('allAnimeData', async () => {
     if (store.allAnime.length === 0) {
-      return $fetch('/api/fetch-anime-data');
+      return await $fetch('/api/fetch-anime-data');
     } else if (error) {
       console.error('Error fetching anime data:', error);
       return navigateTo('/error');
