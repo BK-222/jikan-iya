@@ -95,7 +95,6 @@ const logout = function() {
       <div v-if="isLoggedIn">
         <BaseButton @click="logout">Logout</BaseButton>
       </div>
-      <p v-if="error">Error: {{ error.message }}</p>
     </div>
   </div>
 </template>
