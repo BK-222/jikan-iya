@@ -1,25 +1,22 @@
 <script setup>
 import useAnimeDataStore from '~/stores/anime-data';
 
-const store = useAnimeDataStore();
+// const store = useAnimeDataStore();
 
-const { data, error } = await useAsyncData('allAnimeData', async () => {
-  if (store.allAnime.length === 0) {
-    const response = await $fetch('/api/fetch-anime-data');
-    return response;
-  } else {
-    return store.allAnime;
-  }
-});
 
-// Safely update the store after data is resolved
-if (data.value && store.allAnime.length === 0) {
-  store.setAllAnime(data.value);
-}
+// const { data, error } = await useAsyncData('allAnimeData', async () => {
+//   if (store.allAnime.length === 0) {
+//     const response = await $fetch('/api/fetch-anime-data');
+//     return response;
+//   } else {
+//     return store.allAnime;
+//   }
+// });
 
-// if (animes.value) {  //sends to /error 404 on localhost:3000
-//   store.setAnimes(animes.value);
+// if (data.value && store.allAnime.length === 0) {
+//   store.setAllAnime(data.value);
 // }
+
 </script>
 <template>
   <p class="text-2xl text-center font-bold">Main page.</p>

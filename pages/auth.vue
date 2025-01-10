@@ -50,12 +50,14 @@ const submitForm = async function() {
     }
 
     // const redirectUrl = (route.query.redirect || '/secret');
-    const redirectUrl = ('/secret');
+    const redirectUrl = ('/profile');
     router.replace(redirectUrl);
   } catch (err) {
     console.error('Error during Signup:', err.message); 
     error.value = err.message || 'Failed to authenticate, try later.';
   }
+
+  isLoading.value = false;
 }
 
 const switchAuthMode = function() {
@@ -68,7 +70,11 @@ const logout = function() {
 </script>
 <template>
   <div>
-    <BaseForm @submit.prevent="submitForm">
+    <div v-if="isLoading" class="flex flex-col items-center">
+      <p class="mb-2">Authenticating...</p>
+      <div class="spinner-border animate-spin inline-block w-12 h-12 border-4 rounded-full border-teal-500 border-t-transparent"></div>
+    </div>
+    <BaseForm v-else @submit.prevent="submitForm">
       <div>
         <label for="email">Email:</label>
         <input type="email" id="email" v-model.trim="userDetails.email" />
@@ -88,7 +94,6 @@ const logout = function() {
       <BaseButton @click="switchAuthMode">{{ switchModeButtonCaption }}</BaseButton>
       <div v-if="isLoggedIn">
         <BaseButton @click="logout">Logout</BaseButton>
-        <NuxtLink to="/secret">secret</NuxtLink>
       </div>
       <p v-if="error">Error: {{ error.message }}</p>
     </div>

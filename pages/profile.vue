@@ -24,8 +24,8 @@ const logout = function() {
 
 <template>
   <div>
-    <h1>Secret Page</h1>
-    <p>Welcome to the secret page, only accessible to authenticated users!</p>
+    <h1>Profile Page</h1>
+    <p>Welcome to your profile page, only accessible to authenticated users!</p>
     <NuxtLink to="/mainstream">mainstream</NuxtLink>
     <!-- <li v-if="isLoggedIn"> -->
       <base-button @click="logout">Logout</base-button>
