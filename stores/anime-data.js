@@ -7,12 +7,7 @@ const useAnimeDataStore = defineStore('animeData', () => {
   const isLoaded = ref(false);
   const isMiddlewareExecuted = ref(false);
 
-  const getMainstreamAnime = (mainstreamAnimeIds) => {
-    return allAnime.value.filter(anime => mainstreamAnimeIds.includes(anime.id))
-    .sort((a, b) => mainstreamAnimeIds.indexOf(a.id) - mainstreamAnimeIds.indexOf(b.id));
-  }
-
-  const getIyashikeiAnime = () => {
+  const getIyashikeiAnime = computed(() => {
     return Object.values(allAnime.value.reduce((acc, anime) => {
       const mainTitle = anime.name // re-assign the title to name when I first fetch the data within index.vue
         .replace(/^(Zoku)\s*/, '')
@@ -34,7 +29,12 @@ const useAnimeDataStore = defineStore('animeData', () => {
       acc[mainTitle].seasons.push(anime);
       return acc;
     }, {}));
-  }
+  });
+
+  const getMainstreamAnime = (mainstreamAnimeIds) => {
+    return allAnime.value.filter(anime => mainstreamAnimeIds.includes(anime.id))
+    .sort((a, b) => mainstreamAnimeIds.indexOf(a.id) - mainstreamAnimeIds.indexOf(b.id));
+  };
 
   const getAnimeSeries = (id) => {
     const seriesKey = Object.keys(animeSeriesData).find((key) =>
@@ -65,7 +65,7 @@ const useAnimeDataStore = defineStore('animeData', () => {
   }
 
   return { allAnime, isLoaded, isMiddlewareExecuted, getMainstreamAnime, getIyashikeiAnime, getAnimeSeries,
-    getAnimeById, setAllAnime, setMiddlewareExecuted }; 
+    getAnimeById, setAllAnime, setMiddlewareExecuted }
 });
 
 export default useAnimeDataStore;

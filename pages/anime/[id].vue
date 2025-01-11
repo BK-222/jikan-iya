@@ -1,7 +1,7 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router';
 import useAnimeDataStore from '~/stores/anime-data';
-import useProfileStore from '~/stores/anime-data';
+import useProfileStore from '~/stores/profile';
 
 const route = useRoute();
 const router = useRouter();

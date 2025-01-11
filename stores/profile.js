@@ -5,8 +5,15 @@ const useProfileStore = defineStore('profile', () => {
   const completedAnime = ref([]);
   const plannedAnime = ref([]);
 
+  const getCompletedAnime = computed() => {
+    return completedAnime.value
+  }
+  const getPlannedAnime = computed() => {
+    return plannedAnime.value
+  }
+
   const fetchProfile = async function() {
-    const { supabase } = useNuxtApp();
+    const { $supabase } = useNuxtApp();
 
     const { data, error } = await $supabase
       .from('profiles')
@@ -51,7 +58,7 @@ const useProfileStore = defineStore('profile', () => {
   }
 
 
-  return { userId, completedAnime, plannedAnime, fetchProfile, addCompletedAnime, addPlannedAnime };
+  return { userId, completedAnime, plannedAnime, fetchProfile, addCompletedAnime, addPlannedAnime }
 });
 
 export default useProfileStore;
