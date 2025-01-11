@@ -16,7 +16,7 @@ const logout = function() {
 </script>
 
 <template>
-  <header class="flex justify-between items-center p-4 bg-gray-400 text-white">
+  <header class="flex justify-between items-center p-3 bg-gray-400 text-white">
     <div class="text-lg font-bold">Anime App</div>
     <div v-if="isLoggedIn">
       <BaseButton @click="logout">Logout</BaseButton>

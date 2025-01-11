@@ -29,40 +29,40 @@ const useAnimeDataStore = defineStore('animeData', () => {
           genre: anime.genre,
           type: anime.type,
           seasons: []
-        };
+        }
       }
       acc[mainTitle].seasons.push(anime);
       return acc;
-      }, {}));
-    };
+    }, {}));
+  }
 
-    const getAnimeSeries = (id) => {
-      const seriesKey = Object.keys(animeSeriesData).find((key) =>
-        animeSeriesData[key].includes(parseInt(id))
-      );
-      const relatedIds = animeSeriesData[seriesKey] || [];
-      // Map related IDs to `allAnime`
-      return relatedIds
-      .map((relatedId) => getAnimeById(relatedId))
-      .filter((anime) => anime); // Filter out nulls if some IDs are missing
-    }
+  const getAnimeSeries = (id) => {
+    const seriesKey = Object.keys(animeSeriesData).find((key) =>
+      animeSeriesData[key].includes(parseInt(id))
+    );
+    const relatedIds = animeSeriesData[seriesKey] || [];
+    // Map related IDs to `allAnime`
+    return relatedIds
+    .map((relatedId) => getAnimeById(relatedId))
+    .filter((anime) => anime); // Filter out nulls if some IDs are missing
+  }
 
-    const getAnimeById = (id) => {
-      const animeId = allAnime.value.find(anime => anime.id === parseInt(id));
-      return animeId;
-    }
+  const getAnimeById = (id) => {
+    const animeId = allAnime.value.find(anime => anime.id === parseInt(id));
+    return animeId;
+  }
 
-    const setAllAnime = function(animeList) {
-      if (allAnime.value.length > 0) {
-        return;
-      }
-      allAnime.value = animeList;
-      isLoaded.value = true;
+  const setAllAnime = function(animeList) {
+    if (allAnime.value.length > 0) {
+      return;
     }
+    allAnime.value = animeList;
+    isLoaded.value = true;
+  }
 
-    const setMiddlewareExecuted = function() {
-      isMiddlewareExecuted.value = true;
-    }
+  const setMiddlewareExecuted = function() {
+    isMiddlewareExecuted.value = true;
+  }
 
   return { allAnime, isLoaded, isMiddlewareExecuted, getMainstreamAnime, getIyashikeiAnime, getAnimeSeries,
     getAnimeById, setAllAnime, setMiddlewareExecuted }; 

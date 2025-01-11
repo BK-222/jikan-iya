@@ -1,15 +1,27 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router';
 import useAnimeDataStore from '~/stores/anime-data';
+import useProfileStore from '~/stores/anime-data';
 
 const route = useRoute();
 const router = useRouter();
 const store = useAnimeDataStore();
+const profileStore = useProfileStore();
 
 const animeId = ref(route.params.id);
 
 const animeDetails = computed(() => store.getAnimeById(animeId.value));
 const animeSeries = computed(() => store.getAnimeSeries(animeId.value));
+
+const addToCompleted = async function() {
+  if (!animeDetails.value) return;
+  await profileStore.addCompletedAnime(animeDetails.value);
+}
+
+const addToPlanned = async function() {
+  if (!animeDetails.value) return;
+  await profileStore.addPlannedAnime(animeDetails.value);
+}
 
 watchEffect(() => {
   console.log('Anime ID:', animeId.value);
@@ -35,6 +47,8 @@ const goBack = () => { router.back() }
           Season: {{ season.name }}
         </li>
       </ul>
+      <BaseButton @click="addToCompleted">Add to Completed</BaseButton>
+      <BaseButton @click="addToPlanned">Add to Planning to Watch</BaseButton>
 
       
       <h3>Related Anime:</h3>

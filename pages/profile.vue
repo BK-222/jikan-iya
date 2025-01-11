@@ -12,9 +12,11 @@ const router = useRouter();
 console.log(
   `Navigating to secret: isLoaded=${store.isLoaded}, allAnime.length=${store.allAnime ? store.allAnime.length : 'undefined'}`
 );
-console.log('Store state in secret.vue:', store);
 
-const isLoggedIn = computed(() => store.isLoggedIn);
+// const completedAnime = computed(() => store.completedAnime);
+// const plannedAnime = computed(() => store.allAnime);
+
+const isLoggedIn = computed(() => store.isAuthenticated);
 
 const logout = function() {
   store.logout();
@@ -27,8 +29,8 @@ const logout = function() {
     <h1>Profile Page</h1>
     <p>Welcome to your profile page, only accessible to authenticated users!</p>
     <NuxtLink to="/mainstream">mainstream</NuxtLink>
-    <!-- <li v-if="isLoggedIn"> -->
+    <li v-if="isLoggedIn">
       <base-button @click="logout">Logout</base-button>
-    <!-- </li> -->
+    </li>
   </div>
 </template>
