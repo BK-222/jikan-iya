@@ -62,7 +62,7 @@ const useProfileStore = defineStore('profile', () => {
   }
 
 
-  return { userId, completedAnime, plannedAnime, fetchProfile, addCompletedAnime, addPlannedAnime }
+  return { userId, completedAnime, plannedAnime, getCompletedAnime, getPlannedAnime, fetchProfile, addCompletedAnime, addPlannedAnime }
 });
 
 export default useProfileStore;
