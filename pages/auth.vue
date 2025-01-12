@@ -53,7 +53,6 @@ const submitForm = async function() {
     const redirectUrl = ('/profile');
     router.replace(redirectUrl);
   } catch (err) {
-    console.error('Error during Signup:', err.message); 
     error.value = err.message || 'Failed to authenticate, try later.';
   }
 

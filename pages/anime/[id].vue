@@ -9,18 +9,27 @@ const store = useAnimeDataStore();
 const profileStore = useProfileStore();
 
 const animeId = ref(route.params.id);
+const error = ref(null);
 
 const animeDetails = computed(() => store.getAnimeById(animeId.value));
 const animeSeries = computed(() => store.getAnimeSeries(animeId.value));
 
 const addToCompleted = async function() {
   if (!animeDetails.value) return;
-  await profileStore.addCompletedAnime(animeDetails.value);
+  try {
+    await profileStore.addCompletedAnime(animeDetails.value);
+  } catch (err) {
+    error.value = err.message || 'Failed to add to completed:';
+  }
 }
 
 const addToPlanned = async function() {
   if (!animeDetails.value) return;
-  await profileStore.addPlannedAnime(animeDetails.value);
+  try {
+    await profileStore.addPlannedAnime(animeDetails.value);
+  } catch (err) {
+    error.value = err.message || 'Failed to add to planned';
+  }
 }
 
 watchEffect(() => {

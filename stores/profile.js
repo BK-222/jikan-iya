@@ -5,12 +5,12 @@ const useProfileStore = defineStore('profile', () => {
   const completedAnime = ref([]);
   const plannedAnime = ref([]);
 
-  const getCompletedAnime = computed() => {
+  const getCompletedAnime = computed(() => {
     return completedAnime.value
-  }
-  const getPlannedAnime = computed() => {
+  });
+  const getPlannedAnime = computed(() => {
     return plannedAnime.value
-  }
+  });
 
   const fetchProfile = async function() {
     const { $supabase } = useNuxtApp();
@@ -40,7 +40,9 @@ const useProfileStore = defineStore('profile', () => {
       })
       .eq('user_id', userId.value);
 
-    if (error) throw error;
+      if (error) {
+        console.error('Error adding anime to profile:', error);
+      }
   }
 
   const addPlannedAnime = async function(anime) {
@@ -54,7 +56,9 @@ const useProfileStore = defineStore('profile', () => {
       })
       .eq('user_id', userId.value);
 
-    if (error) throw error;
+      if (error) {
+        console.error('Error adding anime to profile:', error);
+      }
   }
 
 

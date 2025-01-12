@@ -15,12 +15,17 @@ const fetchAnimeData = defineNuxtRouteMiddleware(async (to, from) => {
       return $fetch('/api/fetch-anime-data');
     });
 
+    if (error.value) {
+      console.error('Error fetching anime data:', error.value);
+      return navigateTo('/error');
+    }
+
     if (data.value && store.allAnime.length === 0) {
       store.setAllAnime(data.value);
     } else {
       console.error('Invalid or empty anime data:', data.value);
     }
-  } catch (err) {
+  } catch (error) {
     console.error('Unexpected error in fetchAnimeData middleware:', err);
     return navigateTo('/error');
   }
