@@ -12,8 +12,17 @@ const useProfileStore = defineStore('profile', () => {
     return plannedAnime.value
   });
 
+  const setUserId = function(userId) {
+    userId.value = userId;
+  }
+
   const fetchProfile = async function() {
     const { $supabase } = useNuxtApp();
+
+    // if (!userId.value) {
+    //   console.error('User ID is not set. Cannot fetch profile.');
+    //   return;
+    // }
 
     const { data, error } = await $supabase
       .from('profiles')
@@ -36,7 +45,7 @@ const useProfileStore = defineStore('profile', () => {
     const { data, error } = await $supabase
       .from('profiles')
       .update({
-        completedAnime: completedAnime.value
+        completed_anime: completedAnime.value
       })
       .eq('user_id', userId.value);
 
@@ -52,7 +61,7 @@ const useProfileStore = defineStore('profile', () => {
     const { data, error } = await $supabase
       .from('profiles')
       .update({
-        plannedAnime: plannedAnime.value
+        planned_anime: plannedAnime.value
       })
       .eq('user_id', userId.value);
 
@@ -62,7 +71,7 @@ const useProfileStore = defineStore('profile', () => {
   }
 
 
-  return { userId, completedAnime, plannedAnime, getCompletedAnime, getPlannedAnime, fetchProfile, addCompletedAnime, addPlannedAnime }
+  return { userId, completedAnime, plannedAnime, getCompletedAnime, getPlannedAnime, setUserId, fetchProfile, addCompletedAnime, addPlannedAnime }
 });
 
 export default useProfileStore;

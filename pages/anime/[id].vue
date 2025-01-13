@@ -1,18 +1,28 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router';
 import useAnimeDataStore from '~/stores/anime-data';
+import useAuthenticationStore from '~/stores/auth';
 import useProfileStore from '~/stores/profile';
 
 const route = useRoute();
 const router = useRouter();
 const store = useAnimeDataStore();
+const authStore = useAuthenticationStore();
 const profileStore = useProfileStore();
 
 const animeId = ref(route.params.id);
 const error = ref(null);
 
-const animeDetails = computed(() => store.getAnimeById(animeId.value));
-const animeSeries = computed(() => store.getAnimeSeries(animeId.value));
+const animeDetails = computed(() => {
+  return store.getAnimeById(animeId.value)
+});
+const animeSeries = computed(() => { 
+  return store.getAnimeSeries(animeId.value)
+});
+
+const isLoggedIn = computed(() => {
+  return authStore.isAuthenticated;
+});
 
 const addToCompleted = async function() {
   if (!animeDetails.value) return;
@@ -56,8 +66,10 @@ const goBack = () => { router.back() }
           Season: {{ season.name }}
         </li>
       </ul>
-      <BaseButton @click="addToCompleted">Add to Completed</BaseButton>
-      <BaseButton @click="addToPlanned">Add to Planning to Watch</BaseButton>
+      <div v-if="isLoggedIn">
+        <BaseButton @click="addToCompleted">Add to Completed</BaseButton>
+        <BaseButton @click="addToPlanned">Add to Planning to Watch</BaseButton>
+      </div>
 
       
       <h3>Related Anime:</h3>

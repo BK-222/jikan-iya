@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 // import { supabase } from '@/plugins/supabase';
+import useProfileStore from '~/stores/profile';
 
 const useAuthenticationStore = defineStore('auth', {
   state: () => ({
@@ -51,8 +52,17 @@ const useAuthenticationStore = defineStore('auth', {
       }
 
       if (session?.access_token) { // the same as session && session.access_token
-        console.log('Session obtained:', session);
         this.setAuth(session.access_token, user.id, session.expires_in);
+
+        
+        const profileStore = useProfileStore();
+        profileStore.setUserId(user.id);
+        await profileStore.fetchProfile();
+        
+        // profileStore.userId = user.id;
+        // profileStore.initializeProfile(user.id);
+
+
       } else if (user) {
         throw new Error('Account created. Please check your email to confirm your account.');
       } else {
@@ -86,6 +96,10 @@ const useAuthenticationStore = defineStore('auth', {
 
       this.token = null;
       this.userId = null;
+
+       // Clear the profile store on logout
+       const profileStore = useProfileStore();
+       profileStore.clearProfile();
     }
   }
 });

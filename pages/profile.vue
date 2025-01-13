@@ -13,8 +13,12 @@ const router = useRouter();
 //   `Navigating to secret: isLoaded=${store.isLoaded}, allAnime.length=${store.allAnime ? store.allAnime.length : 'undefined'}`
 // );
 
-const completedAnime = computed(() => store.getCompletedAnime);
-const plannedAnime = computed(() => store.getPlannedAnime);
+const completedAnime = computed(() => {
+  return store.getCompletedAnime;
+});
+const plannedAnime = computed(() => {
+  return store.getPlannedAnime;
+});
 
 onMounted(() => {
   store.fetchProfile();
