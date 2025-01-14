@@ -13,9 +13,9 @@ const iyashikeiAnime = computed(() => {
   <NuxtLink to="/mainstream">mainstream</NuxtLink>
   <div>
     <p>Iyashikei Anime</p>
-    <div v-if="error">{{ error }}</div>
-    <div v-else-if="isLoading">Please wait data is fetching...</div>
-    <ul class="flex flex-row flex-wrap" v-else>
+    <!-- <div v-if="error">{{ error }}</div>
+    <div v-else-if="isLoading">Please wait data is fetching...</div> -->
+    <ul class="flex flex-row flex-wrap">
       <AnimeItem v-for="anime in iyashikeiAnime" :key="anime.id" :anime="anime"></AnimeItem>
     </ul>
     <NuxtLink class="flex justify-center" to="/">

@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia';
-// import { supabase } from '@/plugins/supabase';
 import useProfileStore from '~/stores/profile';
 
 const useAuthenticationStore = defineStore('auth', {
@@ -30,76 +29,85 @@ const useAuthenticationStore = defineStore('auth', {
       return this.auth({ ...payload, mode: 'signup' });
     },
     auth: async function({ email, password, mode }) {
-      const { $supabase } = useNuxtApp();
-      
-      let response;
-      try {
-        if (mode === 'signup') {
-          response = await $supabase.auth.signUp({ email, password });
-        } else {
-          response = await $supabase.auth.signInWithPassword({ email, password });
-        }
-      } catch (err) {
-        throw new Error('Something went wrong with the Supabase request.');
+      let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCwWS_TdY3PTtNR1w_oDz6JDt45ZrH0ckc';
+
+      if (mode === 'signup') {
+          url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCwWS_TdY3PTtNR1w_oDz6JDt45ZrH0ckc';
+        } 
+      const response = await fetch(url, {
+        method: 'POST',
+        body: JSON.stringify({
+          email: email,
+          password: password,
+          returnSecureToken: true
+        })
+      });
+
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        const error = new Error(responseData.message || 'Failed to authenticate. Check your login data.');
+        throw error;
       }
 
-      const { user, session } = response.data || {};
-      const { error } = response;
+      const expiresIn = +responseData.expiresIn * 1000;
+      const expirationDate = new Date().getTime() + expiresIn;
 
-      if (error) {
-        console.error('Supabase Error:', error.message);
-        throw new Error(error.message);
-      }
-
-      if (session?.access_token) { // the same as session && session.access_token
-        this.setAuth(session.access_token, user.id, session.expires_in);
-
-        
-        const profileStore = useProfileStore();
-        profileStore.setUserId(user.id);
-        await profileStore.fetchProfile();
-        
-        // profileStore.userId = user.id;
-        // profileStore.initializeProfile(user.id);
-
-
-      } else if (user) {
-        throw new Error('Account created. Please check your email to confirm your account.');
-      } else {
-        throw new Error('Failed to retrieve authentication token.');
-      }
+      this.setAuth(responseData.idToken, responseData.localId, expirationDate);
     },
-    setAuth(token, userId) {
-      this.token = token;
-      this.userId = userId;
+    setAuth(token, userId, tokenExpiration) {
       
       localStorage.setItem('token', token);
       localStorage.setItem('userId', userId);
+      localStorage.setItem('tokenExpiration', tokenExpiration);
+
+      // timer = setTimeout(function() {
+      //   this.autoLogout();
+      // },)
+
+      this.token = token;
+      this.userId = userId;
     },
     tryLogin() {
       const token = localStorage.getItem('token');
       const userId = localStorage.getItem('userId');
+      const tokenExpiration = localStorage.getItem('tokenExpiration');
 
-      if (!token || !userId) {
-        return this.logout();
+      const expiresIn = +tokenExpiration - new Date().getTime();
+
+      if (expiresIn < 0) {
+        return;
       }
 
-      this.token = token;
-      this.userId = userId;
-    },
-    logout(context) {
-      const { $supabase } = useNuxtApp();
-      $supabase.auth.signOut();
+      timer = setTimeout(function() {
+        this.autoLogout();
+      }, expiresIn);
 
+      if (token && userId) {
+        this.token = token;
+        this.userId = userId;
+      }
+
+      // if (!token || !userId) {
+      //   return this.logout();
+      // }
+
+      // this.token = token;
+      // this.userId = userId;
+    },
+    logout() {
       localStorage.removeItem('token');
       localStorage.removeItem('userId');
+      localStorage.removeItem('tokenExpiration');
+
+      // clearTimeout(timer);
 
       this.token = null;
       this.userId = null;
-
-       // Clear the profile store on logout
-       const profileStore = useProfileStore();
-       profileStore.clearProfile();
+    },
+    autoLogout() {
+      this.logout();
+      this.autoLogout = true;
     }
   }
 });
