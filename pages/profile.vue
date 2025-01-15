@@ -43,5 +43,7 @@ onMounted(() => {
       </li>
     </ul>
     <NuxtLink to="/mainstream">mainstream</NuxtLink>
+    <br>
+    <NuxtLink to="/iyashikei">iyashikei</NuxtLink>
   </div>
 </template>
