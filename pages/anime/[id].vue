@@ -42,12 +42,6 @@ const addToPlanned = async function() {
   }
 }
 
-watchEffect(() => {
-  console.log('Anime ID:', animeId.value);
-  console.log('Anime Details:', animeDetails.value);
-  console.log('All Anime:', store.allAnime);
-});
-
 const goBack = () => { router.back() }
 
 </script>

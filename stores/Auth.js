@@ -9,6 +9,7 @@ const useAuthenticationStore = defineStore('auth', {
   }),
   getters: {
     getUserId(state) {
+      console.log("Getter accessed, userId:", state.userId);
       return state.userId;
     },
     getToken(state) {
@@ -65,6 +66,7 @@ const useAuthenticationStore = defineStore('auth', {
       //   this.autoLogout();
       // },)
 
+      console.log("Setting userId:", userId);
       this.token = token;
       this.userId = userId;
     },
