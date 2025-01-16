@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia';
 import useProfileStore from '~/stores/profile';
 
+let timer;
+
 const useAuthenticationStore = defineStore('auth', {
   state: () => ({
     userId: null,
@@ -9,7 +11,6 @@ const useAuthenticationStore = defineStore('auth', {
   }),
   getters: {
     getUserId(state) {
-      console.log("Getter accessed, userId:", state.userId);
       return state.userId;
     },
     getToken(state) {
@@ -54,17 +55,21 @@ const useAuthenticationStore = defineStore('auth', {
       const expiresIn = +responseData.expiresIn * 1000;
       const expirationDate = new Date().getTime() + expiresIn;
 
-      this.setAuth(responseData.idToken, responseData.localId, expirationDate);
+      this.setAuth(responseData.idToken, responseData.localId, expirationDate, expiresIn);
+
+      // timer = setTimeout(function() {
+      //   this.autoLogout();
+      // }, expiresIn)
     },
-    setAuth(token, userId, tokenExpiration) {
+    setAuth(token, userId, tokenExpiration, expiresIn) {
       
       localStorage.setItem('token', token);
       localStorage.setItem('userId', userId);
       localStorage.setItem('tokenExpiration', tokenExpiration);
 
-      // timer = setTimeout(function() {
-      //   this.autoLogout();
-      // },)
+      timer = setTimeout(() => { //arrow function binds 'this' to the store (avoids issues of the global object)
+        this.autoLogout();
+      }, expiresIn);
 
       console.log("Setting userId:", userId);
       this.token = token;
@@ -89,23 +94,17 @@ const useAuthenticationStore = defineStore('auth', {
         this.token = token;
         this.userId = userId;
       }
-
-      // if (!token || !userId) {
-      //   return this.logout();
-      // }
-
-      // this.token = token;
-      // this.userId = userId;
     },
     logout() {
       localStorage.removeItem('token');
       localStorage.removeItem('userId');
       localStorage.removeItem('tokenExpiration');
 
-      // clearTimeout(timer);
+      clearTimeout(timer);
 
       this.token = null;
       this.userId = null;
+      this.autoLoguot = false // resets the flag on manual logout
     },
     autoLogout() {
       this.logout();

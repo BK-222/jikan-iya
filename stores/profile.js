@@ -21,17 +21,14 @@ const useProfileStore = defineStore('profile', () => {
   const addCompletedAnime = async function(anime) {
     const authStore = useAuthenticationStore();
     const userId = authStore.getUserId;
-    console.log('Adding anime to Firestore:', anime);
-    console.log('Current User ID:', userId);
     if (!userId) {
       console.error('User ID not available!');
       return;
     }
     try {
-      console.log('Adding anime to completed:', anime);
       await setDoc(doc($firestore, `users/${userId}/completed_anime`, anime.id.toString()), anime);
       console.log('Anime successfully added to completed list!');
-      completedAnime.value.push(anime); // Update local state
+      completedAnime.value.push(anime);
     } catch (error) {
       console.error('Error adding anime to completed:', error);
     }
@@ -40,8 +37,12 @@ const useProfileStore = defineStore('profile', () => {
   const addPlannedAnime = async function(anime) {
     const authStore = useAuthenticationStore();
     const userId = authStore.getUserId;
-    if (!userId) return;
-    await setDoc(doc($firestore, `users/${userId.value}/planned_anime`, anime.id.toString()), anime);
+    console.log('Attempting to add anime. User ID:', userId);
+    if (!userId) {
+      console.error('User ID not available!');
+      return;
+    }
+    await setDoc(doc($firestore, `users/${userId}/planned_anime`, anime.id.toString()), anime);
     plannedAnime.value.push(anime);
   }
 
