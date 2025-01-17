@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import useProfileStore from '~/stores/profile';
+// import useProfileStore from '~/stores/profile';
 
 let timer;
 
@@ -101,6 +101,9 @@ const useAuthenticationStore = defineStore('auth', {
       this.token = null;
       this.userId = null;
       this.autoLoguot = false // resets the flag on manual logout
+
+      // const profileStore = useProfileStore();
+      // profileStore.clearState();
     },
     autoLogout() {
       this.logout();

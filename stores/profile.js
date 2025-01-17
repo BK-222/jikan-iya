@@ -3,10 +3,11 @@ import { collection, doc, getDocs, setDoc } from 'firebase/firestore';
 import useAuthenticationStore from '~/stores/auth';
 
 const useProfileStore = defineStore('profile', () => {
-  const completedAnime = ref([]);
-  const plannedAnime = ref([]);
   const { $firestore } = useNuxtApp();
   const authStore = useAuthenticationStore();
+
+  const completedAnime = ref([]);
+  const plannedAnime = ref([]);
 
   const getCompletedAnime = computed(() => {
     return completedAnime.value;
@@ -61,8 +62,43 @@ const useProfileStore = defineStore('profile', () => {
     }
   }
 
+  const removeCompletedAnime = async function(anime) {
+    const userId = authStore.getUserId;
+    if (!userId) {
+      console.error('User ID not available!');
+      return;
+    }
+    try {
+      await deleteDoc(doc($firestore, `users/${userId}/completed_anime`, anime.id.toString()));
+      completedAnime.value = completedAnime.value.filter(anime => anime.id !== anime.id);
+    } catch (error) {
+      console.error('Error removing anime from completed:', error);
+    }
+  }
 
-  return { completedAnime, plannedAnime, getCompletedAnime, getPlannedAnime, fetchProfile, addCompletedAnime, addPlannedAnime }
+  const removePlannedAnime = async function(anime) {
+    const userId = authStore.getUserId;
+    if (!userId) {
+      console.error('User ID not available!');
+      return;
+    }
+    try {
+      await deleteDoc(doc($firestore, `users/${userId}/planned_anime`, anime.id.toString()));
+      plannedAnime.value = plannedAnime.value.filter(anime => anime.id !== anime.id);
+    } catch (error) {
+      console.error('Error removing anime from planned:', error);
+    }
+  }
+
+  // const clearState = () => {
+  //   completedAnime.value = [];
+  //   plannedAnime.value = [];
+  // };
+
+
+  return { completedAnime, plannedAnime, getCompletedAnime, 
+    getPlannedAnime, fetchProfile, addCompletedAnime, addPlannedAnime, 
+    removeCompletedAnime, removePlannedAnime };
 });
 
 export default useProfileStore;
