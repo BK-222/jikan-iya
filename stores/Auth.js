@@ -56,10 +56,6 @@ const useAuthenticationStore = defineStore('auth', {
       const expirationDate = new Date().getTime() + expiresIn;
 
       this.setAuth(responseData.idToken, responseData.localId, expirationDate, expiresIn);
-
-      // timer = setTimeout(function() {
-      //   this.autoLogout();
-      // }, expiresIn)
     },
     setAuth(token, userId, tokenExpiration, expiresIn) {
       
