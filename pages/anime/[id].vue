@@ -26,11 +26,15 @@ const animeSeries = computed(() => {
 });
 
 const isInCompleted = computed(() => {
-  return profileStore.getCompletedAnime.some(anime => anime.id === animeId.value);
+  const normalizedAnimeId = String(animeId.value);
+  return profileStore.getCompletedAnime.some(anime => String(anime.id) === normalizedAnimeId);
+
+  // const inCompleted = profileStore.completedAnime.some(anime => anime.id === animeId.value);
+  // return inCompleted;
 });
 
 const isInPlanned = computed(() => {
-  return profileStore.getPlannedAnime.some(anime => anime.id === animeId.value);
+  return profileStore.plannedAnime.some(anime => anime.id === animeId.value);
 });
 
 const addToCompleted = async function() {
@@ -89,7 +93,7 @@ const goBack = () => { router.back() }
         <BaseButton @click="isInCompleted ? removeFromCompleted() : addToCompleted()">
           {{ isInCompleted ? 'Remove from Completed' : 'Add to Completed' }}
         </BaseButton>
-        <BaseButton @click="isInPlanned ? removeFromPlanned() : addToPlanned()">
+        <BaseButton class="bg-yellow-500 hover:bg-yellow-600" @click="isInPlanned ? removeFromPlanned() : addToPlanned()">
           {{ isInPlanned ? 'Remove from Planned' : 'Add to Planned' }}
         </BaseButton>
       </div>

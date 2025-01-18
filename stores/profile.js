@@ -55,8 +55,10 @@ const useProfileStore = defineStore('profile', () => {
       return;
     }
     try {
-      await setDoc(doc($firestore, `users/${userId}/planned_anime`, anime.id.toString()), anime);
-      plannedAnime.value.push(anime);    
+      await setDoc(doc($firestore, `users/${userId}/planned_anime/${anime.id}`), anime);
+      plannedAnime.value.push(anime);
+      // ensures reactivity for the button
+      // plannedAnime.value = [...plannedAnime.value, anime];
     } catch (error) {
       console.error('Error adding anime to planned:', error);
     }
@@ -70,7 +72,7 @@ const useProfileStore = defineStore('profile', () => {
     }
     try {
       await deleteDoc(doc($firestore, `users/${userId}/completed_anime/${anime.id}`));
-      completedAnime.value = completedAnime.value.filter(anime => anime.id !== anime.id);
+      completedAnime.value = completedAnime.value.filter(anime => anime.id !== anime.id); //keep note of this, always false
     } catch (error) {
       console.error('Error removing anime from completed:', error);
     }

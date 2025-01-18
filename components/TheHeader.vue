@@ -17,9 +17,12 @@ const logout = function() {
 
 <template>
   <header class="flex justify-between items-center p-3 bg-gray-400 text-white">
-    <div class="text-lg font-bold">Anime App</div>
+    <NuxtLink to="/" class="text-lg font-bold">Anime App</NuxtLink>
     <div v-if="isLoggedIn">
       <BaseButton @click="logout">Logout</BaseButton>
+    </div>
+    <div v-else>
+      <NuxtLink to="/auth">Login/Signup</NuxtLink>
     </div>
   </header>
 </template>
