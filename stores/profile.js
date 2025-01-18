@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { collection, doc, getDocs, setDoc } from 'firebase/firestore';
+import { collection, doc, getDocs, setDoc, deleteDoc } from 'firebase/firestore';
 import useAuthenticationStore from '~/stores/auth';
 
 const useProfileStore = defineStore('profile', () => {
@@ -40,7 +40,7 @@ const useProfileStore = defineStore('profile', () => {
       return;
     }
     try {
-      await setDoc(doc($firestore, `users/${userId}/completed_anime`, anime.id.toString()), anime);
+      await setDoc(doc($firestore, `users/${userId}/completed_anime/${anime.id}`), anime);
       console.log('Anime successfully added to completed list!');
       completedAnime.value.push(anime);
     } catch (error) {
@@ -69,7 +69,7 @@ const useProfileStore = defineStore('profile', () => {
       return;
     }
     try {
-      await deleteDoc(doc($firestore, `users/${userId}/completed_anime`, anime.id.toString()));
+      await deleteDoc(doc($firestore, `users/${userId}/completed_anime/${anime.id}`));
       completedAnime.value = completedAnime.value.filter(anime => anime.id !== anime.id);
     } catch (error) {
       console.error('Error removing anime from completed:', error);
@@ -83,7 +83,7 @@ const useProfileStore = defineStore('profile', () => {
       return;
     }
     try {
-      await deleteDoc(doc($firestore, `users/${userId}/planned_anime`, anime.id.toString()));
+      await deleteDoc(doc($firestore, `users/${userId}/planned_anime/${anime.id}`));
       plannedAnime.value = plannedAnime.value.filter(anime => anime.id !== anime.id);
     } catch (error) {
       console.error('Error removing anime from planned:', error);

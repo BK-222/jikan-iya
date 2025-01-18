@@ -26,5 +26,7 @@ import useAnimeDataStore from '~/stores/anime-data';
     <NuxtLink to="/iyashikei">iyashikei</NuxtLink>
     <br>
     <NuxtLink to="/auth">auth</NuxtLink>
+    <br>
+    <NuxtLink to="/profile">profile</NuxtLink>
     
 </template>

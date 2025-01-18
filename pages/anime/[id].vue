@@ -13,15 +13,24 @@ const profileStore = useProfileStore();
 const animeId = ref(route.params.id);
 const error = ref(null);
 
+const isLoggedIn = computed(() => {
+  return authStore.isAuthenticated;
+});
+
 const animeDetails = computed(() => {
   return store.getAnimeById(animeId.value)
 });
+
 const animeSeries = computed(() => { 
   return store.getAnimeSeries(animeId.value)
 });
 
-const isLoggedIn = computed(() => {
-  return authStore.isAuthenticated;
+const isInCompleted = computed(() => {
+  return profileStore.getCompletedAnime.some(anime => anime.id === animeId.value);
+});
+
+const isInPlanned = computed(() => {
+  return profileStore.getPlannedAnime.some(anime => anime.id === animeId.value);
 });
 
 const addToCompleted = async function() {
@@ -39,6 +48,22 @@ const addToPlanned = async function() {
     await profileStore.addPlannedAnime(animeDetails.value);
   } catch (err) {
     error.value = err.message || 'Failed to add to planned';
+  }
+}
+
+const removeFromCompleted = async function() {
+  try {
+    await profileStore.removeCompletedAnime(animeDetails.value);
+  } catch (err) {
+    error.value = 'Failed to remove anime';
+  }
+}
+
+const removeFromPlanned = async function() {
+  try {
+    await profileStore.removePlannedAnime(animeDetails.value);
+  } catch (err) {
+    error.value = 'Failed to remove anime';
   }
 }
 
@@ -61,8 +86,12 @@ const goBack = () => { router.back() }
         </li>
       </ul>
       <div v-if="isLoggedIn">
-        <BaseButton @click="addToCompleted">Add to Completed</BaseButton>
-        <BaseButton @click="addToPlanned">Add to Planning to Watch</BaseButton>
+        <BaseButton @click="isInCompleted ? removeFromCompleted() : addToCompleted()">
+          {{ isInCompleted ? 'Remove from Completed' : 'Add to Completed' }}
+        </BaseButton>
+        <BaseButton @click="isInPlanned ? removeFromPlanned() : addToPlanned()">
+          {{ isInPlanned ? 'Remove from Planned' : 'Add to Planned' }}
+        </BaseButton>
       </div>
 
       
