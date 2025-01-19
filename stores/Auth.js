@@ -73,8 +73,8 @@ const useAuthenticationStore = defineStore('auth', {
     },
     tryLogin() {
       const token = localStorage.getItem('token');
-      const userId = localStorage.getItem('userId');
       const tokenExpiration = localStorage.getItem('tokenExpiration');
+      const userId = localStorage.getItem('userId');
 
       const expiresIn = +tokenExpiration - new Date().getTime();
 
