@@ -1,0 +1,11 @@
+.page-leave-active, .page-enter-active {
+  @apply transition-all duration-500 ease-in-out;
+}
+
+.page-enter-from, .page-leave-to {
+  @apply opacity-0;
+}
+
+.page-enter-to, .page-leave-from {
+  @apply opacity-100;
+}

@@ -73,8 +73,8 @@ const goBack = () => { router.back() }
 </script>
 
 <template>
-  <p class="text-2xl text-center font-bold">Anime Detail Page</p>
   <div>
+    <p class="text-2xl text-center font-bold">Anime Detail Page</p>
     <div v-if="!store.isLoaded">Loading anime details...</div>
     <div v-else-if="!animeDetails">Anime not found</div>
     <div v-else class="flex flex-col items-center">

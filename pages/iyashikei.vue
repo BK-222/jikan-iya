@@ -8,18 +8,18 @@ const iyashikeiAnime = computed(() => {
 });
 </script>
 
-<template :key="data.length">
-  <p class="text-2xl text-center font-bold">Iyashikei page.</p>
-  <NuxtLink to="/mainstream">mainstream</NuxtLink>
+<template>
   <div>
-    <p>Iyashikei Anime</p>
-    <!-- <div v-if="error">{{ error }}</div>
-    <div v-else-if="isLoading">Please wait data is fetching...</div> -->
-    <ul class="flex flex-row flex-wrap">
-      <AnimeItem v-for="anime in iyashikeiAnime" :key="anime.id" :anime="anime"></AnimeItem>
+  <p class="text-2xl text-center font-bold">Iyashikei anime.</p>
+  <NuxtLink to="/mainstream">mainstream</NuxtLink>
+  <div class="flex flex-col min-h-screen p-4">
+    <p class="text-2xl md:text-3xl text-center font-bold mb-6">Iyashikei Anime</p>
+    <ul class="flex flex-col md:flex-row flex-wrap gap-4">
+      <AnimeItem v-for="anime in iyashikeiAnime" :key="anime.id" :anime="anime" class=""></AnimeItem>
     </ul>
-    <NuxtLink class="flex justify-center" to="/">
-      <BaseButton class="self-center">Back to main</BaseButton>
+    <NuxtLink to="/" class="mt-8 self-center">
+      <BaseButton>Back to main</BaseButton>
     </NuxtLink>
+  </div>
   </div>
 </template>
