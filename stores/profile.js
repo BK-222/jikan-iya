@@ -21,11 +21,11 @@ const useProfileStore = defineStore('profile', () => {
     try {
       const completedRef = collection($firestore, `users/${userId}/completed_anime`);
       const completedSnapshot = await getDocs(completedRef);
-      completedAnime.value = completedSnapshot.docs.map(doc => ({ ...doc.data(), id: String(doc.id) }));
+      completedAnime.value = completedSnapshot.docs.map(doc => ({ ...doc.data(), id: +doc.id })); //+ converts the id string to a number for removeCompletedAnime
       
       const plannedRef = collection($firestore, `users/${userId}/planned_anime`);
       const plannedSnapshot = await getDocs(plannedRef);
-      plannedAnime.value = plannedSnapshot.docs.map(doc => ({ ...doc.data(), id: String(doc.id) }));
+      plannedAnime.value = plannedSnapshot.docs.map(doc => ({ ...doc.data(), id: +doc.id })); //+ converts id string to a number for removePlannedAnime
 
     } catch (error) {
       console.error('Error fetching profile:', error);
@@ -48,29 +48,6 @@ const useProfileStore = defineStore('profile', () => {
     }
   }
 
-  const removeCompletedAnime = async function(anime) {
-    const userId = authStore.getUserId;
-    if (!userId) {
-      console.error('User ID not available!');
-      return;
-    }
-    try {
-      await deleteDoc(doc($firestore, `users/${userId}/completed_anime/${anime.id}`));
-      
-      console.log('Completed Anime Before Filter:', completedAnime.value);
-      
-      completedAnime.value = completedAnime.value.filter(a => {
-        console.log('Type of a.id:', typeof a.id, 'Value of a.id:', a.id);
-        console.log('Type of anime.id:', typeof anime.id, 'Value of anime.id:', anime.id);
-        return String(a.id) !== String(anime.id);
-      });
-      
-      console.log('Completed Anime After Filter:', completedAnime.value);
-    } catch (error) {
-      console.error('Error removing anime from completed:', error);
-    }
-  };
-
   const addPlannedAnime = async function(anime) {
     const userId = authStore.getUserId;
     if (!userId) {
@@ -85,19 +62,28 @@ const useProfileStore = defineStore('profile', () => {
     }
   }
 
-  // const removeCompletedAnime = async function(anime) {
-  //   const userId = authStore.getUserId;
-  //   if (!userId) {
-  //     console.error('User ID not available!');
-  //     return;
-  //   }
-  //   try {
-  //     await deleteDoc(doc($firestore, `users/${userId}/completed_anime/${anime.id}`));
-  //     completedAnime.value = completedAnime.value.filter(a => String(a.id) !== String(anime.id));
-  //   } catch (error) {
-  //     console.error('Error removing anime from completed:', error);
-  //   }
-  // }
+  const removeCompletedAnime = async function(anime) {
+    const userId = authStore.getUserId;
+    if (!userId) {
+      console.error('User ID not available!');
+      return;
+    }
+    try {
+      await deleteDoc(doc($firestore, `users/${userId}/completed_anime/${anime.id}`));
+      
+      console.log('Completed Anime Before Filter:', completedAnime.value);
+      
+      completedAnime.value = completedAnime.value.filter(a => {
+        // console.log('Type of a.id:', typeof a.id, 'Value of a.id:', a.id);
+        // console.log('Type of anime.id:', typeof anime.id, 'Value of anime.id:', anime.id);
+        return a.id !== anime.id;
+      });
+      
+      console.log('Completed Anime After Filter:', completedAnime.value);
+    } catch (error) {
+      console.error('Error removing anime from completed:', error);
+    }
+  }
 
   const removePlannedAnime = async function(anime) {
     const userId = authStore.getUserId;
@@ -107,7 +93,7 @@ const useProfileStore = defineStore('profile', () => {
     }
     try {
       await deleteDoc(doc($firestore, `users/${userId}/planned_anime/${anime.id}`));
-      plannedAnime.value = plannedAnime.value.filter(a => String(a.id) !== String(anime.id));
+      plannedAnime.value = plannedAnime.value.filter(a => a.id !== anime.id);
     } catch (error) {
       console.error('Error removing anime from planned:', error);
     }

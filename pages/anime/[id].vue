@@ -26,7 +26,6 @@ const animeSeries = computed(() => {
 });
 
 const isInCompleted = computed(() => {
-  // const normalizedAnimeId = String(animeId.value);
   return profileStore.getCompletedAnime.some(anime => String(anime.id) === animeId.value); //converts number to a string
 });
 
