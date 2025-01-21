@@ -19,14 +19,17 @@
 
 </script>
 <template>
-  <div class="flex flex-col items-center p-4 space-y-4 md:space-y-6">
-    <p class="text-2xl text-center font-bold">Main page.</p>
-    <p class="text-3xl text-center font-bold">This is the main page.</p>
-    <div class="flex flex-col items-center space-y-2 md:flex-row md:space-y-0 md:space-x-4">
+  <div class="flex flex-col items-center justify-center min-h-screen p-4 relative">
+    <div class="flex gap-4 mb-4 md:flex-col md:absolute md:top-4 md:left-4 md:mb-0">
       <NuxtLink to="/mainstream">mainstream</NuxtLink>
       <NuxtLink to="/iyashikei">iyashikei</NuxtLink>
       <NuxtLink to="/auth">auth</NuxtLink>
       <NuxtLink to="/profile">profile</NuxtLink>
+    </div>
+
+    <div class="text-center flex-1">
+      <p class="text-3xl font-bold">Main page.</p>
+      <p class="text-lg font-semibold text-gray-700">This is the main page.</p>
     </div>
   </div>
 </template>

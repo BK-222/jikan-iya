@@ -13,6 +13,9 @@ const profileStore = useProfileStore();
 const animeId = ref(route.params.id);
 const error = ref(null);
 
+const scrollPosition = ref(0);
+const scrollContainer = ref(null);
+
 const isLoggedIn = computed(() => {
   return authStore.isAuthenticated;
 });
@@ -77,9 +80,9 @@ const goBack = () => { router.back() }
     <div v-if="!store.isLoaded">Loading anime details...</div>
     <div v-else-if="!animeDetails">Anime not found</div>
     <div v-else class="flex flex-col items-center">
-      <img class="h-70 w-60" :src="animeDetails.image" alt="Anime Image" />
-      <h2>{{ animeDetails.name }}</h2>
-      <p>Genres: {{ animeDetails?.genres?.join(', ') || 'No genres available'}}</p>
+      <img class="h-70 w-60 rounded-sm" :src="animeDetails.image" alt="Anime Image" />
+      <p class="font-medium">{{ animeDetails.name }}</p>
+      <p class="text-sm text-gray-600">Genres: {{ animeDetails?.genres?.join(', ') || 'No genres available'}}</p>
       <ul>
         <li v-for="season in animeDetails.seasons" :key="season.mal_id">
           Season: {{ season.name }}
@@ -95,12 +98,12 @@ const goBack = () => { router.back() }
       </div>
 
       <h3>Related Anime:</h3>
-      <ul class="flex gap-x-2">
+      <ul class="flex gap-x-2 overflow-x-auto w-full md:justify-center">
         <li v-for="relatedAnime in animeSeries" :key="relatedAnime.id">
           <router-link :to="`/anime/${relatedAnime.id}`">
-            <div class="flex flex-col w-28">
-              <NuxtImg :src="relatedAnime.image" :alt="relatedAnime.name" class="w-20 h-24 self-center" />
-              <span class="text-center">{{ relatedAnime.name }}</span>
+            <div class="flex flex-col w-28 p-4" :title="relatedAnime.name">
+              <NuxtImg :src="relatedAnime.image" :alt="relatedAnime.name" class="w-20 h-24 self-center rounded-sm" />
+              <span class="text-center truncate">{{ relatedAnime.name }}</span>
             </div>
           </router-link>
         </li>

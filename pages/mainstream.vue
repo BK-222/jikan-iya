@@ -12,8 +12,7 @@ const mainstreamAnime = computed(() => {
 
 <template>
   <div class="flex flex-col items-center p-4 space-y-6">
-    <p class="text-2xl text-center font-bold">Mainstream Anime</p>
-    <NuxtLink to="/iyashikei">Iyashikei</NuxtLink>
+    <p class="text-2xl font-bold text-center">Mainstream Anime</p>
     <div v-if="!store.allAnime.length"> <!-- Check if anime data is loaded -->
       Loading mainstream anime...
     </div>

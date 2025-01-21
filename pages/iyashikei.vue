@@ -10,8 +10,7 @@ const iyashikeiAnime = computed(() => {
 
 <template>
   <div class="flex flex-col items-center p-4 space-y-6">
-  <p class="text-2xl text-center font-bold">Iyashikei anime.</p>
-  <NuxtLink to="/mainstream">mainstream</NuxtLink>
+  <p class="text-2xl font-bold text-center">Iyashikei anime.</p>
   <div class="flex flex-col min-h-screen p-4">
     <ul class="flex flex-col md:flex-row flex-wrap gap-4">
       <AnimeItem v-for="anime in iyashikeiAnime" :key="anime.id" :anime="anime" />
