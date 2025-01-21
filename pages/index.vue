@@ -1,5 +1,5 @@
 <script setup>
-import useAnimeDataStore from '~/stores/anime-data';
+// import useAnimeDataStore from '~/stores/anime-data';
 
 // const store = useAnimeDataStore();
 
@@ -19,30 +19,14 @@ import useAnimeDataStore from '~/stores/anime-data';
 
 </script>
 <template>
-  <div>
+  <div class="flex flex-col items-center p-4 space-y-4 md:space-y-6">
     <p class="text-2xl text-center font-bold">Main page.</p>
-    <p class="text-4xl text-center font-bold">This is the main page.</p>
-    <NuxtLink to="/mainstream">mainstream</NuxtLink>
-    <br>
-    <NuxtLink to="/iyashikei">iyashikei</NuxtLink>
-    <br>
-    <NuxtLink to="/auth">auth</NuxtLink>
-    <br>
-    <NuxtLink to="/profile">profile</NuxtLink>
+    <p class="text-3xl text-center font-bold">This is the main page.</p>
+    <div class="flex flex-col items-center space-y-2 md:flex-row md:space-y-0 md:space-x-4">
+      <NuxtLink to="/mainstream">mainstream</NuxtLink>
+      <NuxtLink to="/iyashikei">iyashikei</NuxtLink>
+      <NuxtLink to="/auth">auth</NuxtLink>
+      <NuxtLink to="/profile">profile</NuxtLink>
+    </div>
   </div>
 </template>
-<!-- <template>
-  <header class="flex flex-col md:flex-row justify-between items-center p-4 bg-gray-400 text-white">
-    <NuxtLink to="/" class="text-xl font-bold mb-4 md:mb-0">Anime App</NuxtLink>
-    <nav class="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
-      <NuxtLink to="/mainstream" class="hover:text-gray-200">Mainstream</NuxtLink>
-      <NuxtLink to="/iyashikei" class="hover:text-gray-200">Iyashikei</NuxtLink>
-      <div v-if="isLoggedIn">
-        <BaseButton @click="logout">Logout</BaseButton>
-      </div>
-      <div v-else>
-        <NuxtLink to="/auth" class="hover:text-gray-200">Login/Signup</NuxtLink>
-      </div>
-    </nav>
-  </header>
-</template> -->

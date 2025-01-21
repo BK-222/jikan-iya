@@ -94,7 +94,6 @@ const goBack = () => { router.back() }
         </BaseButton>
       </div>
 
-      
       <h3>Related Anime:</h3>
       <ul class="flex gap-x-2">
         <li v-for="relatedAnime in animeSeries" :key="relatedAnime.id">
@@ -106,7 +105,6 @@ const goBack = () => { router.back() }
           </router-link>
         </li>
       </ul>
-
 
       <BaseButton @click="goBack()" class="self-center">Back to Anime List</BaseButton>
     </div>
