@@ -1,6 +1,8 @@
 import useAnimeDataStore from '~/stores/anime-data';
 
 export default defineNuxtPlugin(async () => {
+  if (process.server) return;
+
   const store = useAnimeDataStore();
 
   if (store.isLoaded) {

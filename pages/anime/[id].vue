@@ -106,7 +106,7 @@ const goBack = () => { router.back() }
         </li>
       </ul>
 
-      <BaseButton @click="goBack()" class="self-center">back</BaseButton>
+      <BaseButton @click="goBack()" class="self-center">Go back</BaseButton>
     </div>
   </div>
 </template>

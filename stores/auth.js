@@ -84,7 +84,7 @@ const useAuthenticationStore = defineStore('auth', {
         return;
       }
 
-      timer = setTimeout(function() {
+      timer = setTimeout(() => {
         this.autoLogout();
       }, expiresIn);
 
@@ -102,7 +102,7 @@ const useAuthenticationStore = defineStore('auth', {
 
       this.token = null;
       this.userId = null;
-      this.autoLoguot = false // resets the flag on manual logout
+      this.autoLogout = false // resets the flag on manual logout
 
       // const profileStore = useProfileStore();
       // profileStore.clearState();
