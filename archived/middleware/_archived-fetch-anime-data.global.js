@@ -3,8 +3,6 @@ import useAnimeDataStore from '~/stores/anime-data';
 const fetchAnimeData = defineNuxtRouteMiddleware(async (to, from) => {
   const store = useAnimeDataStore();
 
-  // console.log(`Middleware fetchAnimeData triggered for: ${to.fullPath}`);
-
   if (store.isLoaded) {
     console.log('Anime data already loaded, skipping fetch.');
     return;

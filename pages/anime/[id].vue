@@ -13,9 +13,6 @@ const profileStore = useProfileStore();
 const animeId = ref(route.params.id);
 const error = ref(null);
 
-const scrollPosition = ref(0);
-const scrollContainer = ref(null);
-
 const isLoggedIn = computed(() => {
   return authStore.isAuthenticated;
 });
@@ -109,7 +106,7 @@ const goBack = () => { router.back() }
         </li>
       </ul>
 
-      <BaseButton @click="goBack()" class="self-center">Back to Anime List</BaseButton>
+      <BaseButton @click="goBack()" class="self-center">back</BaseButton>
     </div>
   </div>
 </template>

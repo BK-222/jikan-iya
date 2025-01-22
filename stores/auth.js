@@ -72,6 +72,8 @@ const useAuthenticationStore = defineStore('auth', {
       this.userId = userId;
     },
     tryLogin() {
+      if (!process.client) return;
+
       const token = localStorage.getItem('token');
       const tokenExpiration = localStorage.getItem('tokenExpiration');
       const userId = localStorage.getItem('userId');
