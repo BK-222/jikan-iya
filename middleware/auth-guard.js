@@ -1,6 +1,6 @@
 import useAuthStore from '~/stores/auth';
 
-const authMiddleware = defineNuxtRouteMiddleware(async (to, from) => {
+const authMiddleware = defineNuxtRouteMiddleware((to, from) => {
 
   const store = useAuthStore();
 

@@ -1,14 +1,16 @@
 import useAnimeDataStore from '~/stores/anime-data';
 
-export default defineNuxtPlugin(async () => {
-  if (process.server) return;
+export default defineNuxtPlugin(async (nuxtApp) => {
+  if (import.meta.server) return;  //ensures the plugin runs only on the client side, otherwise SSR issues
 
-  const store = useAnimeDataStore();
+  const store = useAnimeDataStore(nuxtApp.$pinia);
 
-  if (store.isLoaded) {
-    console.log('Anime data already loaded, skipping fetch.');
+  if (store.isLoaded || store.isFetching) {
+    console.log('Anime data already loaded of fetching, skipping fetch.');
     return;
   }
+
+  store.isFetching = true;
 
   try {
     const { data, error } = await useAsyncData('allAnimeData', () => {
@@ -27,5 +29,7 @@ export default defineNuxtPlugin(async () => {
     }
   } catch (error) {
     console.error('Unexpected error in fetchAnimeData middleware:', err);
+  } finally {
+    store.isFetching = false;
   }
 });

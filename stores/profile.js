@@ -74,8 +74,6 @@ const useProfileStore = defineStore('profile', () => {
       console.log('Completed Anime Before Filter:', completedAnime.value);
       
       completedAnime.value = completedAnime.value.filter(a => {
-        // console.log('Type of a.id:', typeof a.id, 'Value of a.id:', a.id);
-        // console.log('Type of anime.id:', typeof anime.id, 'Value of anime.id:', anime.id);
         return a.id !== anime.id;
       });
       

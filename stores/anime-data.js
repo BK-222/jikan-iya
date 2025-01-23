@@ -5,6 +5,7 @@ import animeSeriesData from '@/data/anime-series.json';
 const useAnimeDataStore = defineStore('animeData', () => {
   const allAnime = ref([]);
   const isLoaded = ref(false);
+  const isFetching = ref(false);
   const isMiddlewareExecuted = ref(false);
 
   const getIyashikeiAnime = computed(() => {
@@ -64,7 +65,7 @@ const useAnimeDataStore = defineStore('animeData', () => {
     isMiddlewareExecuted.value = true;
   }
 
-  return { allAnime, isLoaded, isMiddlewareExecuted, getMainstreamAnime, getIyashikeiAnime, getAnimeSeries,
+  return { allAnime, isLoaded, isFetching, isMiddlewareExecuted, getMainstreamAnime, getIyashikeiAnime, getAnimeSeries,
     getAnimeById, setAllAnime, setMiddlewareExecuted }
 });
 
