@@ -66,6 +66,7 @@ const switchAuthMode = function() {
 const logout = function() {
   store.logout();
 }
+
 </script>
 <template>
   <div>

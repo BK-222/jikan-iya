@@ -72,7 +72,7 @@ const useAuthenticationStore = defineStore('auth', {
       this.userId = userId;
     },
     tryLogin() {
-      if (!import.meta.client) return;
+      if (!import.meta.client) return;  // for the auto-login plugin to work only on the client side
 
       const token = localStorage.getItem('token');
       const tokenExpiration = localStorage.getItem('tokenExpiration');

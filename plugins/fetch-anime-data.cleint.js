@@ -1,9 +1,9 @@
 import useAnimeDataStore from '~/stores/anime-data';
 
-export default defineNuxtPlugin(async (nuxtApp) => {
-  if (import.meta.server) return;  //ensures the plugin runs only on the client side, otherwise SSR issues
+export default defineNuxtPlugin(async () => {
+  //if (import.meta.server) return;  //ensures the plugin runs only on the client side, otherwise SSR issues
 
-  const store = useAnimeDataStore(nuxtApp.$pinia);
+  const store = useAnimeDataStore();
 
   if (store.isLoaded || store.isFetching) {
     console.log('Anime data already loaded of fetching, skipping fetch.');
