@@ -26,7 +26,7 @@ const fetchAllAnimeData = defineEventHandler(async () => {
       if (response.data && response.data.length > 0) {
         allAnime = [...allAnime, ...response.data];
         currentPage++;
-        await delay(700);
+        await delay(750);
       } else {
         hasMoreData = false;
       }
