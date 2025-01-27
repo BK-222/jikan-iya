@@ -14,33 +14,53 @@ const useAuthStore = defineStore('auth', {
     }
   },
   actions: {
-    login: async function(payload) {
-      try {
-        const { email, password } = payload;
-        const response = await $fetch('/api/auth', {
-          method: 'POST',
-          body: { email, password, mode: 'login' },
-        });
-        this.userId = response.userId;
-        this.isAuthenticated = true;
-      } catch (error) {
-        console.error("Login error:", error);
-        throw error;
-      }
+    // login: async function(payload) {
+    //   try {
+    //     const { email, password } = payload;
+    //     const response = await $fetch('/api/auth', {
+    //       method: 'POST',
+    //       body: { email, password, mode: 'login' },
+    //     });
+    //     this.userId = response.userId;
+    //     this.isAuthenticated = true;
+    //   } catch (error) {
+    //     console.error("Login error:", error);
+    //     throw error;
+    //   }
+    // },
+    // signup: async function(payload) {
+    //   try {
+    //     const { email, password } = payload;
+    //     const response = await $fetch('/api/auth', {
+    //       method: 'POST',
+    //       body: { email, password, mode: 'signup' },
+    //     });
+    //     this.userId = response.userId;
+    //     this.isAuthenticated = true;
+    //   } catch (error) {
+    //     console.error("Signup error:", error);
+    //     throw error;
+    //   }
+    // },
+    login(payload) {
+      return this.auth({ ...payload, mode: 'login' });
     },
-    signup: async function(payload) {
+    signup(payload) {
+      return this.auth({ ...payload, mode: 'signup' });
+    },
+    auth: async function({ email, password, mode }) {
       try {
-        const { email, password } = payload;
         const response = await $fetch('/api/auth', {
           method: 'POST',
-          body: { email, password, mode: 'signup' },
+          body: { email, password, mode }
         });
         this.userId = response.userId;
         this.isAuthenticated = true;
+        return response;
       } catch (error) {
-        console.error("Signup error:", error);
+        console.error("Auth error:", error);
         throw error;
-      }
+        }
     },
     logout: async function() {
       try {
@@ -50,7 +70,7 @@ const useAuthStore = defineStore('auth', {
       } catch (error) {
         console.error("Logout error:", error);
       }
-    },
+    }
     // tryLogin: async function() {
     //   try {
     //     const response = await $fetch('/api/auth/session'); // Assume we add a session-check endpoint
@@ -62,7 +82,7 @@ const useAuthStore = defineStore('auth', {
     //     this.logout(); // Clear state if session check fails
     //   }
     // }
-  },
+  }
 });
 
 export default useAuthStore;
