@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 
 const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -14,34 +15,6 @@ const useAuthStore = defineStore('auth', {
     }
   },
   actions: {
-    // login: async function(payload) {
-    //   try {
-    //     const { email, password } = payload;
-    //     const response = await $fetch('/api/auth', {
-    //       method: 'POST',
-    //       body: { email, password, mode: 'login' },
-    //     });
-    //     this.userId = response.userId;
-    //     this.isAuthenticated = true;
-    //   } catch (error) {
-    //     console.error("Login error:", error);
-    //     throw error;
-    //   }
-    // },
-    // signup: async function(payload) {
-    //   try {
-    //     const { email, password } = payload;
-    //     const response = await $fetch('/api/auth', {
-    //       method: 'POST',
-    //       body: { email, password, mode: 'signup' },
-    //     });
-    //     this.userId = response.userId;
-    //     this.isAuthenticated = true;
-    //   } catch (error) {
-    //     console.error("Signup error:", error);
-    //     throw error;
-    //   }
-    // },
     login(payload) {
       return this.auth({ ...payload, mode: 'login' });
     },
@@ -50,10 +23,19 @@ const useAuthStore = defineStore('auth', {
     },
     auth: async function({ email, password, mode }) {
       try {
+        const { $auth } = useNuxtApp();
+
+        const userCredential = mode === 'login' 
+        ? await signInWithEmailAndPassword($auth, email, password)
+        : await createUserWithEmailAndPassword($auth, email, password);
+
+        const idToken = await userCredential.user.getIdToken();
+
         const response = await $fetch('/api/auth', {
           method: 'POST',
-          body: { email, password, mode }
+          body: { idToken }
         });
+
         this.userId = response.userId;
         this.isAuthenticated = true;
         return response;
