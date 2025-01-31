@@ -4,7 +4,7 @@ import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'fire
 const useAuthStore = defineStore('auth', {
   state: () => ({
     userId: null,
-    isAuthenticated: false,
+    isAuthenticated: false
   }),
   getters: {
     getUserId(state) {
@@ -31,7 +31,7 @@ const useAuthStore = defineStore('auth', {
 
         const idToken = await userCredential.user.getIdToken();
 
-        const response = await $fetch('/api/auth', {
+        const response = await $fetch('/api/auth/auth', {
           method: 'POST',
           body: { idToken }
         });
@@ -46,24 +46,31 @@ const useAuthStore = defineStore('auth', {
     },
     logout: async function() {
       try {
-        await $fetch('/api/logout', { method: 'POST' });
+        await $fetch('/api/auth/logout', { method: 'POST' });
         this.userId = null;
         this.isAuthenticated = false;
       } catch (error) {
         console.error("Logout error:", error);
       }
+    },
+    tryLogin: async function() {
+      try {
+        const response = await $fetch('/api/auth/session'); // Assume we add a session-check endpoint
+        if (response.userId && response.isAuthenticated) {
+          this.userId = response.userId;
+          this.isAuthenticated = true;
+          return true;
+        } else {
+          this.userId = null;
+          this.isAuthenticated = false;
+          return false;
+        }
+      } catch (error) {
+        this.userId = null;
+        this.isAuthenticated = false;
+        return false;
+      }
     }
-    // tryLogin: async function() {
-    //   try {
-    //     const response = await $fetch('/api/auth/session'); // Assume we add a session-check endpoint
-    //     if (response.userId) {
-    //       this.userId = response.userId;
-    //       this.isAuthenticated = true;
-    //     }
-    //   } catch {
-    //     this.logout(); // Clear state if session check fails
-    //   }
-    // }
   }
 });
 

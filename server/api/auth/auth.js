@@ -18,6 +18,7 @@ export default defineEventHandler(async (event) => {
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
       maxAge: 3600000
+      // path: '/'
     });
 
     return { userId: decodedToken.uid };

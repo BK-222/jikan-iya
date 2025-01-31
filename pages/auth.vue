@@ -4,7 +4,6 @@ import { useRouter, useRoute } from 'vue-router';
 
 const store = useAuthStore();
 const router = useRouter();
-const route = useRoute();
 
 const userDetails = reactive({
   email: '',
