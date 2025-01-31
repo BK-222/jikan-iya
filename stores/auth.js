@@ -31,7 +31,7 @@ const useAuthStore = defineStore('auth', {
 
         const idToken = await userCredential.user.getIdToken();
 
-        const response = await $fetch('/api/auth/auth', {
+        const response = await $fetch('/api/auth/session', {
           method: 'POST',
           body: { idToken }
         });
@@ -46,7 +46,7 @@ const useAuthStore = defineStore('auth', {
     },
     logout: async function() {
       try {
-        await $fetch('/api/auth/logout', { method: 'POST' });
+        await $fetch('/api/auth/session', { method: 'DELETE' });
         this.userId = null;
         this.isAuthenticated = false;
       } catch (error) {

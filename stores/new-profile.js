@@ -17,7 +17,7 @@ const useProfileStore = defineStore('profile', () => {
 
   const fetchProfile = async function() {
     try {
-      const response = await $fetch('/api/profile');
+      const response = await $fetch('/api/profile/');
       completedAnime.value = response.completed;
       plannedAnime.value = response.planned;
     } catch (error) {
@@ -27,7 +27,7 @@ const useProfileStore = defineStore('profile', () => {
 
   const addCompletedAnime = async function(anime) {
     try {
-      await $fetch('/api/profile/add-completed', {
+      await $fetch('/api/profile/completed', {
         method: 'POST',
         body: { anime }
       });
@@ -39,7 +39,7 @@ const useProfileStore = defineStore('profile', () => {
 
   const addPlannedAnime = async function(anime) {
     try {
-      await $fetch('/api/profile/add-planned', {
+      await $fetch('/api/profile/planned', {
         method: 'POST',
         body: { anime }
       });
@@ -51,7 +51,7 @@ const useProfileStore = defineStore('profile', () => {
 
   const removeCompletedAnime = async function(anime) {
     try {
-      await $fetch('/api/profile/remove-completed', {
+      await $fetch('/api/profile/completed', {
         method: 'DELETE',
         body: { id: anime.id }
       });
@@ -63,7 +63,7 @@ const useProfileStore = defineStore('profile', () => {
 
   const removePlannedAnime = async function(anime) {
     try {
-      await $fetch('/api/profile/remove-planned', {
+      await $fetch('/api/profile/planned', {
         method: 'DELETE',
         body: { id: anime.id }
       });
