@@ -1,4 +1,12 @@
 <script setup>
+import useAuthStore from '~/stores/auth';
+
+const authStore = useAuthStore();
+
+const isLoggedIn = computed(() => {
+  return authStore.isAuthenticated;
+});
+
 // import useAnimeDataStore from '~/stores/anime-data';
 
 // const store = useAnimeDataStore();
@@ -23,8 +31,8 @@
     <div class="flex gap-4 mb-4 md:flex-col md:absolute md:top-4 md:left-4 md:mb-0">
       <NuxtLink to="/mainstream">mainstream</NuxtLink>
       <NuxtLink to="/iyashikei">iyashikei</NuxtLink>
-      <NuxtLink to="/auth">auth</NuxtLink>
-      <NuxtLink to="/profile">profile</NuxtLink>
+      <NuxtLink v-if="!isLoggedIn" to="/auth">authenticate</NuxtLink>
+      <NuxtLink v-else to="/profile">profile</NuxtLink>
     </div>
 
     <div class="text-center flex-1">

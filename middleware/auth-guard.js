@@ -1,9 +1,9 @@
 import useAuthStore from '~/stores/auth';
 
 const authMiddleware = defineNuxtRouteMiddleware((to, from) => {
-  const store = useAuthStore();;
+  const authStore = useAuthStore();
 
-  if (!store.isAuthenticated) {
+  if (!authStore.isAuthenticated) {
     // return navigateTo(`/auth?redirect=${to.fullPath}`); // stores the information about the intended destination
     return navigateTo('/auth');
   }

@@ -2,6 +2,10 @@
 import useAuthStore from '~/stores/auth';
 import { useRouter, useRoute } from 'vue-router';
 
+definePageMeta({
+  middleware: 'guest-guard',
+});
+
 const store = useAuthStore();
 const router = useRouter();
 
@@ -29,6 +33,8 @@ const submitButtonCaption = computed(() => {
 
 const submitForm = async function() {
   isFormValid.value = true;
+  error.value = null;
+
   if (userDetails.email === '' || !userDetails.email.includes('@') || userDetails.password.length < 6) {
     isFormValid.value = false;
     return;
@@ -49,13 +55,12 @@ const submitForm = async function() {
     }
 
     // const redirectUrl = (route.query.redirect || '/secret');
-    const redirectUrl = ('/profile');
-    router.replace(redirectUrl);
+    router.replace('/profile');
   } catch (err) {
-    error.value = err.message || 'Failed to authenticate, try later.';
+    error.value = err.message || 'Failed to authenticate, please try again later.';
+  } finally {
+    isLoading.value = false;
   }
-
-  isLoading.value = false;
 }
 
 const switchAuthMode = function() {
@@ -76,24 +81,21 @@ const logout = function() {
     <BaseForm v-else @submit.prevent="submitForm">
       <div>
         <label for="email">Email:</label>
-        <input type="email" id="email" v-model.trim="userDetails.email" />
+        <input type="email" id="email" v-model.trim="userDetails.email" class="border rounded" required />
       </div>
       <div>
         <label for="password">Password:</label>
-        <input type="password" id="password" v-model.trim="userDetails.password" />
+        <input type="password" id="password" v-model.trim="userDetails.password" class="border rounded" required />
       </div>
       <p v-if="!isFormValid">
         Please enter a valid email and a password of at least 6 characters.
       </p>
       <BaseButton>{{ submitButtonCaption }}</BaseButton>
     </BaseForm>
-    <div class="flex justify-center items-center">
+    <div class="flex justify-center items-center mt-4 space-x-2">
       <p v-if="mode === 'login'">Don't yet have an account?</p>
       <p v-else>Already have an account?</p>
       <BaseButton @click="switchAuthMode">{{ switchModeButtonCaption }}</BaseButton>
-      <div v-if="isLoggedIn">
-        <BaseButton @click="logout">Logout</BaseButton>
-      </div>
     </div>
   </div>
 </template>
