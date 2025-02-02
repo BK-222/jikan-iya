@@ -11,12 +11,10 @@ export default defineEventHandler(async (event) => {
   try {
     const db = getFirestore();
     // Fetch completed anime
-    const completedRef = db.collection(`users/${uid}/completed_anime`);
-    const completedSnapshot = await completedRef.get();
+    const completedSnapshot = await db.collection(`users/${uid}/completed_anime`).get();
     const completedAnime = completedSnapshot.docs.map(doc => ({ id: +doc.id, ...doc.data() }));
     // Fetch planned anime
-    const plannedRef = db.collection(`users/${uid}/planned_anime`);
-    const plannedSnapshot = await plannedRef.get();
+    const plannedSnapshot = await db.collection(`users/${uid}/planned_anime`).get();
     const plannedAnime = plannedSnapshot.docs.map(doc => ({ id: +doc.id, ...doc.data() }));
 
     return { completedAnime, plannedAnime };

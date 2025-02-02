@@ -17,7 +17,7 @@ const useProfileStore = defineStore('profile', () => {
 
   const fetchProfile = async function() {
     try {
-      const response = await $fetch('/api/profile/');
+      const response = await $fetch('/api/profile/fetch');
       completedAnime.value = response.completed;
       plannedAnime.value = response.planned;
     } catch (error) {
