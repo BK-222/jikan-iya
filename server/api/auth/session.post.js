@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
       // path: '/'
     });
 
-    return { userId: decodedToken.uid };
+    return { success: true, userId: decodedToken.uid }
   } catch (error) {
     throw createError({ statusCode: 401, message: 'Authentication failed' });
   }

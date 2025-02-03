@@ -2,7 +2,7 @@
 import { useRoute, useRouter } from 'vue-router';
 import useAnimeDataStore from '~/stores/anime-data';
 import useAuthenticationStore from '~/stores/auth';
-import useProfileStore from '~/stores/new-profile';
+import useProfileStore from '~/stores/profile';
 
 const route = useRoute();
 const router = useRouter();

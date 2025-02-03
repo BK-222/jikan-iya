@@ -6,10 +6,10 @@ export default defineEventHandler(async (event) => {
 
   try {
     const auth = getAuth();
-    const decoded = await auth.verifySessionCookie(sessionCookie);
-    return { isAuthenticated: true, userId: decoded.uid };
-  } catch {
+    const decodedToken = await auth.verifySessionCookie(sessionCookie);
+    return { isAuthenticated: true, userId: decodedToken.uid };
+  } catch (error) {
     console.error("Session verification failed:", error);
-    return { isAuthenticated: false };
+    return { isAuthenticated: false }
   }
 });

@@ -1,10 +1,7 @@
 import { defineStore } from 'pinia';
-import { collection, doc, getDocs, setDoc, deleteDoc } from 'firebase/firestore';
 import useAuthenticationStore from '~/stores/auth';
 
 const useProfileStore = defineStore('profile', () => {
-  const { $firestore } = useNuxtApp();
-  const authStore = useAuthenticationStore();
 
   const completedAnime = ref([]);
   const plannedAnime = ref([]);
@@ -17,91 +14,62 @@ const useProfileStore = defineStore('profile', () => {
   });
 
   const fetchProfile = async function() {
-    const userId = authStore.getUserId;
     try {
-      const completedRef = collection($firestore, `users/${userId}/completed_anime`);
-      const completedSnapshot = await getDocs(completedRef);
-      completedAnime.value = completedSnapshot.docs.map(doc => ({ ...doc.data(), id: +doc.id })); //+ converts the id string to a number for removeCompletedAnime
-      
-      const plannedRef = collection($firestore, `users/${userId}/planned_anime`);
-      const plannedSnapshot = await getDocs(plannedRef);
-      plannedAnime.value = plannedSnapshot.docs.map(doc => ({ ...doc.data(), id: +doc.id })); //+ converts id string to a number for removePlannedAnime
-
+      const response = await $fetch('/api/profile/fetch');
+      completedAnime.value = response.data.completedAnime;
+      plannedAnime.value = response.data.plannedAnime;
     } catch (error) {
-      console.error('Error fetching profile:', error);
-      throw error;
+      console.error('Profile fetch error:', error);
     }
   }
 
   const addCompletedAnime = async function(anime) {
-    const userId = authStore.getUserId;
-    if (!userId) {
-      console.error('User ID not available!');
-      return;
-    }
     try {
-      await setDoc(doc($firestore, `users/${userId}/completed_anime/${anime.id}`), anime);
-      console.log('Anime successfully added to completed list!');
+      await $fetch('/api/profile/completed', {
+        method: 'POST',
+        body: { anime }
+      });
       completedAnime.value.push(anime);
     } catch (error) {
-      console.error('Error adding anime to completed:', error);
+      console.error('Error adding anime:', error);
     }
   }
 
   const addPlannedAnime = async function(anime) {
-    const userId = authStore.getUserId;
-    if (!userId) {
-      console.error('User ID not available!');
-      return;
-    }
     try {
-      await setDoc(doc($firestore, `users/${userId}/planned_anime/${anime.id}`), anime);
-      plannedAnime.value.push(anime);
+      await $fetch('/api/profile/planned', {
+        method: 'POST',
+        body: { anime }
+      });
+      plannedAnime.value.push(anime); // Same optimistic update
     } catch (error) {
-      console.error('Error adding anime to planned:', error);
+      console.error('Error adding anime:', error);
     }
   }
 
   const removeCompletedAnime = async function(anime) {
-    const userId = authStore.getUserId;
-    if (!userId) {
-      console.error('User ID not available!');
-      return;
-    }
     try {
-      await deleteDoc(doc($firestore, `users/${userId}/completed_anime/${anime.id}`));
-      
-      console.log('Completed Anime Before Filter:', completedAnime.value);
-      
-      completedAnime.value = completedAnime.value.filter(a => {
-        return a.id !== anime.id;
+      await $fetch('/api/profile/completed', {
+        method: 'DELETE',
+        body: { id: anime.id }
       });
-      
-      console.log('Completed Anime After Filter:', completedAnime.value);
+      completedAnime.value = completedAnime.value.filter(a => a.id !== anime.id);
     } catch (error) {
-      console.error('Error removing anime from completed:', error);
+      console.error('Remove failed:', error);
     }
   }
 
   const removePlannedAnime = async function(anime) {
-    const userId = authStore.getUserId;
-    if (!userId) {
-      console.error('User ID not available!');
-      return;
-    }
     try {
-      await deleteDoc(doc($firestore, `users/${userId}/planned_anime/${anime.id}`));
+      await $fetch('/api/profile/planned', {
+        method: 'DELETE',
+        body: { id: anime.id }
+      });
       plannedAnime.value = plannedAnime.value.filter(a => a.id !== anime.id);
     } catch (error) {
-      console.error('Error removing anime from planned:', error);
+      console.error('Remove failed:', error);
     }
   }
-
-  // const clearState = () => {
-  //   completedAnime.value = [];
-  //   plannedAnime.value = [];
-  // };
-
 
   return { completedAnime, plannedAnime, getCompletedAnime, 
     getPlannedAnime, fetchProfile, addCompletedAnime, addPlannedAnime, 

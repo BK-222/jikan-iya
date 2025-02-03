@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
     const plannedSnapshot = await db.collection(`users/${uid}/planned_anime`).get();
     const plannedAnime = plannedSnapshot.docs.map(doc => ({ id: +doc.id, ...doc.data() }));
 
-    return { completedAnime, plannedAnime };
+    return { success: true, data: { completedAnime, plannedAnime } }
   } catch (error) {
     console.error('Error fetching profile:', error);
     throw createError({ statusCode: 500, message: 'Failed to fetch profile' });
