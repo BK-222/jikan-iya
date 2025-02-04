@@ -27,7 +27,7 @@ const useProfileStore = defineStore('profile', () => {
     try {
       await $fetch('/api/profile/completed', {
         method: 'POST',
-        body: { anime }
+        body: anime
       });
       completedAnime.value.push(anime);
     } catch (error) {
@@ -39,7 +39,7 @@ const useProfileStore = defineStore('profile', () => {
     try {
       await $fetch('/api/profile/planned', {
         method: 'POST',
-        body: { anime }
+        body: anime
       });
       plannedAnime.value.push(anime); // Same optimistic update
     } catch (error) {

@@ -3,8 +3,9 @@ import { getAuth } from 'firebase-admin/auth';
 
 export default defineEventHandler(async (event) => {
   const sessionCookie = getCookie(event, 'auth_token'); 
-  if (!sessionCookie) throw createError({ statusCode: 401, message: 'Unauthorized' });
-
+  if (!sessionCookie) {
+    throw createError({ statusCode: 401, message: 'Unauthorized' });
+  }
   const auth = getAuth();
   const { uid } = await auth.verifySessionCookie(sessionCookie); // Extracts user ID from session
 

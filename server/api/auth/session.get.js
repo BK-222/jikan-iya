@@ -2,7 +2,7 @@ import { getAuth } from 'firebase-admin/auth';
 
 export default defineEventHandler(async (event) => {
   const sessionCookie = getCookie(event, 'auth_token');
-  if (!sessionCookie) return { isAuthenticated: false };
+  if (!sessionCookie) return { isAuthenticated: false }; // non-error conditioning due to the nature of this endpoint
 
   try {
     const auth = getAuth();

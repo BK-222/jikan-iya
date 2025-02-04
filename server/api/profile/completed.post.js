@@ -9,7 +9,6 @@ export default defineEventHandler(async (event) => {
 
   const auth = getAuth();
   const { uid } = await auth.verifySessionCookie(sessionCookie);
-
   const body = await readBody(event); // Get anime data from request
 
   try {

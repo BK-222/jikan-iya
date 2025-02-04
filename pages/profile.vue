@@ -1,13 +1,11 @@
 <script setup>
 import useProfileStore from '~/stores/profile';
-import { useRouter } from 'vue-router';
 
 definePageMeta({
   middleware: 'auth-guard',
 });
 
 const store = useProfileStore();
-const router = useRouter();
 
 const completedAnime = computed(() => {
   return store.getCompletedAnime;

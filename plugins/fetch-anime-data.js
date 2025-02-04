@@ -3,6 +3,7 @@ import useAuthStore from '~/stores/auth';
 
 export default defineNuxtPlugin(async () => {
    //if (import.meta.server) return;  //ensures the plugin runs only on the client side, otherwise SSR issues
+  //if (import.meta.env.SSR) return;
   const store = useAnimeDataStore();
   const authStore = useAuthStore();
 
@@ -33,7 +34,7 @@ export default defineNuxtPlugin(async () => {
       console.error('Invalid or empty anime data:', data.value);
     }
   } catch (error) {
-    console.error('Unexpected error in fetchAnimeData middleware:', err);
+    console.error('Unexpected error in fetchAnimeData middleware:', error);
   } finally {
     store.isFetching = false;
   }
