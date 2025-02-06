@@ -8,7 +8,7 @@ const authMiddleware = defineNuxtRouteMiddleware((to, from) => {
     return navigateTo('/auth');
   }
 
-  if (to.params.userId !== authStore.userId) {  // profiles are private for now, for publically accessable profilees and their lists adjustments to be made in profile store and profile API endpoints with dynamic userIds
+  if (to.params.id !== authStore.userId) {  // profiles are private for now, for publically accessable profilees and their lists adjustments to be made in profile store and profile API endpoints with dynamic userIds
     return navigateTo('/');
   }
 });
