@@ -3,27 +3,15 @@ import useAuthStore from '~/stores/auth';
 
 const authStore = useAuthStore();
 
+const authReady = ref(false);
+
 const isLoggedIn = computed(() => {
   return authStore.isAuthenticated;
 });
 
-// import useAnimeDataStore from '~/stores/anime-data';
-
-// const store = useAnimeDataStore();
-
-
-// const { data, error } = await useAsyncData('allAnimeData', async () => {
-//   if (store.allAnime.length === 0) {
-//     const response = await $fetch('/api/fetch-anime-data');
-//     return response;
-//   } else {
-//     return store.allAnime;
-//   }
-// });
-
-// if (data.value && store.allAnime.length === 0) {
-//   store.setAllAnime(data.value);
-// }
+onMounted(() => {
+  authReady.value = true;
+});
 
 </script>
 <template>
