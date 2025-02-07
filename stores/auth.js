@@ -4,11 +4,15 @@ import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'fire
 const useAuthStore = defineStore('auth', {
   state: () => ({
     userId: null,
+    username: null,
     isAuthenticated: false
   }),
   getters: {
     getUserId(state) {
       return state.userId;
+    },
+    getUsername(state) {
+      return state.username;
     },
     getToken(state) {
       return state.token;
@@ -21,13 +25,17 @@ const useAuthStore = defineStore('auth', {
     signup(payload) {
       return this.auth({ ...payload, mode: 'signup' });
     },
-    auth: async function({ email, password, mode }) {
+    auth: async function({ email, password, mode, username }) {
       try {
         const { $auth } = useNuxtApp();
 
-        const userCredential = mode === 'login' 
-        ? await signInWithEmailAndPassword($auth, email, password)
-        : await createUserWithEmailAndPassword($auth, email, password);
+        let userCredential;
+        if (mode === 'login') {
+          userCredential = await signInWithEmailAndPassword($auth, email, password);
+        } else {
+          userCredential = await createUserWithEmailAndPassword($auth, email, password);
+          await updateProfile(userCredential.user, { displayName: username });
+        }
 
         const idToken = await userCredential.user.getIdToken();
 
@@ -38,6 +46,9 @@ const useAuthStore = defineStore('auth', {
 
         this.userId = response.userId;
         this.isAuthenticated = true;
+         // If the API returns the username or a local display name fallback
+        this.username = userCredential.user.displayName || username;
+
         return response;
       } catch (error) {
         console.error("Auth error:", error);

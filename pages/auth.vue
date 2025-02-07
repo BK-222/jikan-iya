@@ -1,35 +1,23 @@
 <script setup>
 import useAuthStore from '~/stores/auth';
-import { useRouter, useRoute } from 'vue-router';
+import { useRouter } from 'vue-router';
 
 definePageMeta({
   middleware: 'guest-guard',
 });
 
-const store = useAuthStore();
+const authStore = useAuthStore();
 const router = useRouter();
 
-const userDetails = reactive({
-  email: '',
-  password: ''
-});
+const userDetails = reactive({ email: '', username: '', password: '' });
 
-const isFormValid = ref(true);
-const mode = ref('login');
-const isLoading = ref(false);
-const error = ref(null);
+const isFormValid = ref(true),
+      mode = ref('login'),
+      isLoading = ref(false),
+      error = ref(null);
 
-const isLoggedIn = computed(() => {
-  return store.isAuthenticated;
-});
-
-const switchModeButtonCaption = computed(() => {
-  return mode.value === 'login' ? 'Signup' : 'Login';
-});
-
-const submitButtonCaption = computed(() => {
-  return mode.value === 'login' ? 'Login' : 'Signup';
-});
+const switchModeButtonCaption = computed(() => mode.value === 'login' ? 'Signup' : 'Login');
+const submitButtonCaption = computed(() => mode.value === 'login' ? 'Login' : 'Signup');
 
 const submitForm = async function() {
   isFormValid.value = true;
@@ -40,22 +28,25 @@ const submitForm = async function() {
     return;
   }
 
-  isLoading.value = true;
-
-  const actionPayload = { 
-    email: userDetails.email, 
-    password: userDetails.password
+   if (mode.value === 'signup' && userDetails.username.length < 4) {
+    isFormValid.value = false
+    return
   }
 
+  isLoading.value = true;
+
+  const actionPayload = mode.value === 'login'
+    ? { email: userDetails.email, password: userDetails.password }
+    : { email: userDetails.email, username: userDetails.username, password: userDetails.password };
+
   try {
-    if (mode.value === 'login') {
-      await store.login(actionPayload);
-    } else {
-      await store.signup(actionPayload);
-    }
+    mode.value === 'login'
+    ? await authStore.login(actionPayload)
+    : await authStore.signup(actionPayload);
 
     // const redirectUrl = (route.query.redirect || '/secret');
-    await router.replace(`/profile/${store.getUserId}`);
+
+    await router.replace(`/profile/${authStore.username || authStore.getUserId}`);
   } catch (err) {
     error.value = err.message || 'Failed to authenticate, please try again later.';
   } finally {
@@ -65,10 +56,6 @@ const submitForm = async function() {
 
 const switchAuthMode = function() {
   mode.value === 'login' ? mode.value = 'signup' : mode.value = 'login';
-}
-
-const logout = function() {
-  store.logout();
 }
 
 </script>
@@ -82,6 +69,10 @@ const logout = function() {
       <div>
         <label for="email">Email:</label>
         <input type="email" id="email" v-model.trim="userDetails.email" class="border rounded" required />
+      </div>
+      <div v-if="mode === 'signup'">
+        <label for="username">Username:</label>
+        <input type="text" id="username" v-model.trim="userDetails.username" class="border rounded" required />
       </div>
       <div>
         <label for="password">Password:</label>
