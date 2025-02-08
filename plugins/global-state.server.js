@@ -17,3 +17,4 @@
 //     console.error("Error seeding auth state on server:", error);
 //   }
 // });
+export default defineNuxtPlugin(() => {})

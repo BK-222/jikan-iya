@@ -9,7 +9,7 @@ definePageMeta({
 const authStore = useAuthStore();
 const router = useRouter();
 
-const userDetails = reactive({ email: '', username: '', password: '' });
+const userDetails = reactive({ email: '', password: '' });
 
 const isFormValid = ref(true),
       mode = ref('login'),
@@ -46,7 +46,7 @@ const submitForm = async function() {
 
     // const redirectUrl = (route.query.redirect || '/secret');
 
-    await router.replace(`/profile/${authStore.username || authStore.getUserId}`);
+    await router.replace(`/profile/${authStore.getUserId}`);
   } catch (err) {
     error.value = err.message || 'Failed to authenticate, please try again later.';
   } finally {

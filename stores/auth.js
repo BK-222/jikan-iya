@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia';
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 
 const useAuthStore = defineStore('auth', {
   state: () => ({
     userId: null,
-    username: null,
+    // username: null,
     isAuthenticated: false
   }),
   getters: {
@@ -34,7 +34,7 @@ const useAuthStore = defineStore('auth', {
           userCredential = await signInWithEmailAndPassword($auth, email, password);
         } else {
           userCredential = await createUserWithEmailAndPassword($auth, email, password);
-          await updateProfile(userCredential.user, { displayName: username });
+          // await updateProfile(userCredential.user, { displayName: username });
         }
 
         const idToken = await userCredential.user.getIdToken();
@@ -46,8 +46,8 @@ const useAuthStore = defineStore('auth', {
 
         this.userId = response.userId;
         this.isAuthenticated = true;
-         // If the API returns the username or a local display name fallback
-        this.username = userCredential.user.displayName || username;
+
+        // this.username = userCredential.user.displayName;
 
         return response;
       } catch (error) {
@@ -69,6 +69,7 @@ const useAuthStore = defineStore('auth', {
         const response = await $fetch('/api/auth/session'); // Assume we add a session-check endpoint
         if (response.userId && response.isAuthenticated) {
           this.userId = response.userId;
+          this.username = response.username; // double check
           this.isAuthenticated = true;
           return true;
         } else {
