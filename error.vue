@@ -1,11 +1,3 @@
-<!-- <template>
-  <div>
-    <h1>404 - Page Not Found</h1>
-    <p><NuxtLink to="/">Back to main</NuxtLink></p>
-  </div>
-</template>
- -->
-
 <template>
   <div class="min-h-screen flex flex-col items-center justify-center p-4 text-center bg-gray-50">
     <div class="max-w-2xl w-full">

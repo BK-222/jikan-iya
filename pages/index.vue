@@ -20,7 +20,7 @@ onMounted(() => {
       <NuxtLink to="/mainstream">mainstream</NuxtLink>
       <NuxtLink to="/iyashikei">iyashikei</NuxtLink>
       <NuxtLink v-if="!isLoggedIn" to="/auth">authenticate</NuxtLink>
-      <NuxtLink v-else :to="`/profile/${authStore.username}`">profile</NuxtLink>
+      <NuxtLink v-else :to="`/profile/${authStore.userId}`">profile</NuxtLink>
     </div>
 
     <div class="text-center flex-1">

@@ -10,6 +10,6 @@ export default defineNuxtPlugin(() => {
     provide: {
       auth: getAuth(app),
       firestore: getFirestore(app)
-    },
-  };
+    }
+  }
 });
