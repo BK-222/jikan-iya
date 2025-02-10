@@ -1,10 +1,9 @@
 import { defineStore } from 'pinia';
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 
 const useAuthStore = defineStore('auth', {
   state: () => ({
     userId: null,
-    // username: null,
     isAuthenticated: false
   }),
   getters: {
@@ -25,7 +24,7 @@ const useAuthStore = defineStore('auth', {
     signup(payload) {
       return this.auth({ ...payload, mode: 'signup' });
     },
-    auth: async function({ email, password, mode, username }) {
+    auth: async function({ email, password, mode }) {
       try {
         const { $auth } = useNuxtApp();
 
@@ -34,7 +33,6 @@ const useAuthStore = defineStore('auth', {
           userCredential = await signInWithEmailAndPassword($auth, email, password);
         } else {
           userCredential = await createUserWithEmailAndPassword($auth, email, password);
-          // await updateProfile(userCredential.user, { displayName: username });
         }
 
         const idToken = await userCredential.user.getIdToken();
@@ -46,8 +44,6 @@ const useAuthStore = defineStore('auth', {
 
         this.userId = response.userId;
         this.isAuthenticated = true;
-
-        // this.username = userCredential.user.displayName;
 
         return response;
       } catch (error) {

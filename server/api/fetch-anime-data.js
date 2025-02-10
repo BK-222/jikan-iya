@@ -11,7 +11,7 @@ const fetchWithRetry = async (url, retries = 3, delayMs = 1000) => {
       await delay(delayMs);
     }
   }
-};
+}
 
 const fetchAllAnimeData = defineEventHandler(async () => {
   let allAnime = [];

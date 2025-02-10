@@ -11,10 +11,10 @@ const router = useRouter();
 
 const userDetails = reactive({ email: '', password: '' });
 
-const isFormValid = ref(true),
-      mode = ref('login'),
-      isLoading = ref(false),
-      error = ref(null);
+const isFormValid = ref(true);
+const mode = ref('login');
+const isLoading = ref(false);
+const error = ref(null);
 
 const switchModeButtonCaption = computed(() => mode.value === 'login' ? 'Signup' : 'Login');
 const submitButtonCaption = computed(() => mode.value === 'login' ? 'Login' : 'Signup');

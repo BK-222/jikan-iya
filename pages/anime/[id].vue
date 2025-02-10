@@ -33,39 +33,37 @@ const isInPlanned = computed(() => {
   return profileStore.getPlannedAnime.some(anime => String(anime.id) === animeId.value);
 });
 
-const addToCompleted = async function() {
+const updateAnimeList = async (method, errorMessage) => {
   if (!animeDetails.value) return;
   try {
-    await profileStore.addCompletedAnime(animeDetails.value);
+    await method(animeDetails.value);
   } catch (err) {
-    error.value = err.message || 'Failed to add to completed:';
+    error.value = err.message || errorMessage;
   }
 }
 
-const addToPlanned = async function() {
-  if (!animeDetails.value) return;
-  try {
-    await profileStore.addPlannedAnime(animeDetails.value);
-  } catch (err) {
-    error.value = err.message || 'Failed to add to planned';
-  }
+const addToCompleted = function() {
+  updateAnimeList(profileStore.addCompletedAnime, 'Failed to add to completed');
+}
+const addToPlanned = function() {
+  updateAnimeList(profileStore.addPlannedAnime, 'Failed to add to planned');
+}
+const removeFromCompleted = function() {
+  updateAnimeList(profileStore.removeCompletedAnime, 'Failed to remove anime');
+}
+const removeFromPlanned = function() {
+  updateAnimeList(profileStore.removePlannedAnime, 'Failed to remove anime');
 }
 
-const removeFromCompleted = async function() {
-  try {
-    await profileStore.removeCompletedAnime(animeDetails.value);
-  } catch (err) {
-    error.value = 'Failed to remove anime';
-  }
-}
+// const addToCompleted = async function() {
+//   if (!animeDetails.value) return;
+//   try {
+//     await profileStore.addCompletedAnime(animeDetails.value);
+//   } catch (err) {
+//     error.value = err.message || 'Failed to add to completed:';
+//   }
+// }
 
-const removeFromPlanned = async function() {
-  try {
-    await profileStore.removePlannedAnime(animeDetails.value);
-  } catch (err) {
-    error.value = 'Failed to remove anime';
-  }
-}
 
 const goBack = () => { router.back() }
 
