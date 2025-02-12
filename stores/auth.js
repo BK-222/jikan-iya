@@ -10,9 +10,6 @@ const useAuthStore = defineStore('auth', {
     getUserId(state) {
       return state.userId;
     },
-    getUsername(state) {
-      return state.username;
-    },
     getToken(state) {
       return state.token;
     }
@@ -68,16 +65,13 @@ const useAuthStore = defineStore('auth', {
           this.username = response.username; // double check
           this.isAuthenticated = true;
           return true;
-        } else {
-          this.userId = null;
-          this.isAuthenticated = false;
-          return false;
-        }
+        } 
       } catch (error) {
-        this.userId = null;
-        this.isAuthenticated = false;
-        return false;
+        console.error("Session check error:", error);
       }
+      this.userId = null;
+      this.isAuthenticated = false;
+      return false;
     }
   }
 });
