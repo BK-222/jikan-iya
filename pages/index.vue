@@ -35,9 +35,8 @@ onMounted(() => {
       <p class="text-3xl font-bold">Main page.</p>
       <p class="text-lg font-semibold text-gray-700">This is the main page.</p>
     </div>
-  </div>
 
-  <div class="flex">
+     <!-- <div class="flex">
     <div class="w-64 bg-gray-100 min-h-screen p-6">
       <nav class="space-y-4">
         <NuxtLink to="/mainstream" class="block px-4 py-2 hover:bg-gray-200 rounded">
@@ -54,5 +53,7 @@ onMounted(() => {
         </NuxtLink>
       </nav>
     </div>
+  </div> -->
   </div>
+
 </template>
