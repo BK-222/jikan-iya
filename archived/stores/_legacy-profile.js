@@ -100,12 +100,12 @@ const useProfileStore = defineStore('profile', () => {
   // const clearState = () => {
   //   completedAnime.value = [];
   //   plannedAnime.value = [];
-  // };
+  // }
 
 
   return { completedAnime, plannedAnime, getCompletedAnime, 
     getPlannedAnime, fetchProfile, addCompletedAnime, addPlannedAnime, 
-    removeCompletedAnime, removePlannedAnime };
+    removeCompletedAnime, removePlannedAnime }
 });
 
 export default useProfileStore;

@@ -20,7 +20,7 @@ const useAnimeListStore = defineStore('animeList', () => {
   // }
 
   const getUniqueAnimes = () => {
-    const uniqueTitles = {};
+    const uniqueTitles = {}
     return iyashikeiAnimes.value.filter(anime => {
       const mainTitle = anime.name.split(' ')[0];
       if (uniqueTitles[mainTitle]) {
@@ -33,7 +33,7 @@ const useAnimeListStore = defineStore('animeList', () => {
 
   const getAnimeSeries = (id) => {
     return animeSeries.value[id] || [];
-  };
+  }
 
   const setMainstreamAnimes = function(animeList) {
     mainstreamAnimes.value = animeList;

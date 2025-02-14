@@ -43,7 +43,7 @@ const useAuthenticationStore = defineStore('auth', {
         throw new Error('Something went wrong with the Supabase request.');
       }
 
-      const { user, session } = response.data || {};
+      const { user, session } = response.data || {}
       const { error } = response;
 
       if (error) {

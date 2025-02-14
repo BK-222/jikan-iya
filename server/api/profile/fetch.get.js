@@ -4,7 +4,10 @@ import { getAuth } from 'firebase-admin/auth';
 export default defineEventHandler(async (event) => {
   const sessionCookie = getCookie(event, 'auth_token'); 
   if (!sessionCookie) {
-    throw createError({ statusCode: 401, message: 'Unauthorized' });
+    throw createError({
+      statusCode: 401,
+      message: 'Unauthorized'
+    });
   }
   const auth = getAuth();
   const { uid } = await auth.verifySessionCookie(sessionCookie); // Extracts user ID from session
@@ -18,9 +21,15 @@ export default defineEventHandler(async (event) => {
     const plannedSnapshot = await db.collection(`users/${uid}/planned_anime`).get();
     const plannedAnime = plannedSnapshot.docs.map(doc => ({ id: +doc.id, ...doc.data() }));
 
-    return { success: true, data: { completedAnime, plannedAnime } }
+    return {
+      success: true,
+      data: { completedAnime, plannedAnime }
+    }
   } catch (error) {
     console.error('Error fetching profile:', error);
-    throw createError({ statusCode: 500, message: 'Failed to fetch profile' });
+    throw createError({
+      statusCode: 500,
+      message: 'Failed to fetch profile'
+    });
   }
 });

@@ -10,5 +10,5 @@ export default defineNuxtPlugin(() => {
     provide: {
       supabase,
     },
-  };
+  }
 });

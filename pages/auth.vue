@@ -37,7 +37,7 @@ const submitForm = async function() {
 
   const actionPayload = mode.value === 'login'
     ? { email: userDetails.email, password: userDetails.password }
-    : { email: userDetails.email, username: userDetails.username, password: userDetails.password };
+    : { email: userDetails.email, username: userDetails.username, password: userDetails.password }
 
   try {
     mode.value === 'login'

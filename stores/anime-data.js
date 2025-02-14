@@ -35,7 +35,7 @@ const useAnimeDataStore = defineStore('animeData', () => {
   const getMainstreamAnime = (mainstreamAnimeIds) => {
     return allAnime.value.filter(anime => mainstreamAnimeIds.includes(anime.id))
     .sort((a, b) => mainstreamAnimeIds.indexOf(a.id) - mainstreamAnimeIds.indexOf(b.id));
-  };
+  }
 
   const getAnimeSeries = (id) => {
     const seriesKey = Object.keys(animeSeriesData).find((key) =>
