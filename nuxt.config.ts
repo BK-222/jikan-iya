@@ -21,6 +21,11 @@ export default defineNuxtConfig({
     }
   },
   runtimeConfig: {
+    firebaseAdmin: {
+      projectId: process.env.NUXT_FIREBASE_ADMIN_PROJECT_ID,
+      clientEmail: process.env.NUXT_FIREBASE_ADMIN_CLIENT_EMAIL,
+      privateKey: process.env.NUXT_FIREBASE_ADMIN_PRIVATE_KEY?.replace(/\\n/g, '\n')
+    },
     public: {
       firebase: {
         apiKey: process.env.NUXT_PUBLIC_FIREBASE_API_KEY,
