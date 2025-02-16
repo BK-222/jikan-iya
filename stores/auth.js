@@ -9,9 +9,6 @@ const useAuthStore = defineStore('auth', {
   getters: {
     getUserId(state) {
       return state.userId;
-    },
-    getToken(state) {
-      return state.token;
     }
   },
   actions: {
@@ -46,7 +43,7 @@ const useAuthStore = defineStore('auth', {
       } catch (error) {
         console.error("Auth error:", error);
         throw error;
-        }
+      }
     },
     logout: async function() {
       try {
