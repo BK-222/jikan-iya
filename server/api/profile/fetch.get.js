@@ -9,6 +9,7 @@ export default defineEventHandler(async (event) => {
       message: 'Unauthorized'
     });
   }
+  
   const auth = getAuth();
   const { uid } = await auth.verifySessionCookie(sessionCookie); // Extracts user ID from session
 

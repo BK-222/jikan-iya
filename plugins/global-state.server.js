@@ -4,7 +4,6 @@
 //   // Use the server-side request event to get cookies, etc.
 //   const event = nuxtApp.ssrContext?.event; // available in Nuxt 3 SSR context
   
-//   // You might call your API endpoint directly here:
 //   try {
 //     const authData = await $fetch('/api/auth/session', { event });
 //     // Attach this data to a global state using Nuxt’s useState

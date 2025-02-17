@@ -70,10 +70,6 @@ const switchAuthMode = function() {
         <label for="email">Email:</label>
         <input type="email" id="email" v-model.trim="userDetails.email" class="border rounded" required />
       </div>
-      <!-- <div v-if="mode === 'signup'">
-        <label for="username">Username:</label>
-        <input type="text" id="username" v-model.trim="userDetails.username" class="border rounded" required />
-      </div> -->
       <div>
         <label for="password">Password:</label>
         <input type="password" id="password" v-model.trim="userDetails.password" class="border rounded" required />

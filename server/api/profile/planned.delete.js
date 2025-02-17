@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
       message: 'Unauthorized'
     });
   }
-
+  
   const auth = getAuth();
   const { uid } = await auth.verifySessionCookie(sessionCookie);
   const { id } = await readBody(event); // Get anime ID from request

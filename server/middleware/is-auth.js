@@ -11,11 +11,6 @@ export default defineEventHandler(async (event) => {
   } catch (error) {
 
     console.error('Auth middleware error:', error);
-    
-    // Don't delete cookie for network/timeout errors
-    // if (error.code === 'auth/network-error' || error.code === 'auth/timeout') {
-    //   return;
-    // }
 
     deleteCookie(event, 'auth_token');
   }

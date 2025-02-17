@@ -3,13 +3,11 @@ import useAuthStore from '~/stores/auth';
 
 export default defineNuxtPlugin(async () => {
    //if (import.meta.server) return;  //ensures the plugin runs only on the client side, otherwise SSR issues
-  //if (import.meta.env.SSR) return;
   const store = useAnimeDataStore();
   const authStore = useAuthStore();
 
   //  Wait for auth to resolve
    await authStore.tryLogin();
-  
 
   if (store.isLoaded || store.isFetching) {
     console.log('Anime data already loaded of fetching, skipping fetch.');
