@@ -46,7 +46,7 @@ const submitForm = async function() {
 
     // const redirectUrl = (route.query.redirect || '/secret');
 
-    await router.replace(`/profile/${authStore.getUserId}`);
+    await router.replace(`/profile/${authStore.userId}`);
   } catch (err) {
     error.value = err.message || 'Failed to authenticate, please try again later.';
   } finally {

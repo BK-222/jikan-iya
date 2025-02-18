@@ -8,10 +8,10 @@ definePageMeta({
 const store = useProfileStore();
 
 const completedAnime = computed(() => {
-  return store.getCompletedAnime;
+  return store.completedAnime;
 });
 const plannedAnime = computed(() => {
-  return store.getPlannedAnime;
+  return store.plannedAnime;
 });
 
 onMounted(() => {

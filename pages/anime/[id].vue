@@ -26,11 +26,11 @@ const animeSeries = computed(() => {
 });
 
 const isInCompleted = computed(() => {
-  return profileStore.getCompletedAnime.some(anime => String(anime.id) === animeId.value); //converts number to a string
+  return profileStore.completedAnime.some(anime => String(anime.id) === animeId.value); //converts number to a string
 });
 
 const isInPlanned = computed(() => {
-  return profileStore.getPlannedAnime.some(anime => String(anime.id) === animeId.value);
+  return profileStore.plannedAnime.some(anime => String(anime.id) === animeId.value);
 });
 
 const updateAnimeList = async (method, errorMessage) => {

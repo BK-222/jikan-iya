@@ -6,13 +6,6 @@ const useProfileStore = defineStore('profile', () => {
   const completedAnime = ref([]);
   const plannedAnime = ref([]);
 
-  const getCompletedAnime = computed(() => {
-    return completedAnime.value;
-  });
-  const getPlannedAnime = computed(() => {
-    return plannedAnime.value;
-  });
-
   const fetchProfile = async function() {
     try {
       const response = await $fetch('/api/profile/fetch');
@@ -71,8 +64,7 @@ const useProfileStore = defineStore('profile', () => {
     }
   }
 
-  return { completedAnime, plannedAnime, getCompletedAnime, 
-    getPlannedAnime, fetchProfile, addCompletedAnime, addPlannedAnime, 
+  return { completedAnime, plannedAnime, fetchProfile, addCompletedAnime, addPlannedAnime, 
     removeCompletedAnime, removePlannedAnime }
 });
 
