@@ -6,11 +6,6 @@ const useAuthStore = defineStore('auth', {
     userId: null,
     isAuthenticated: false
   }),
-  getters: {
-    getUserId(state) {
-      return state.userId;
-    }
-  },
   actions: {
     login(payload) {
       return this.auth({ ...payload, mode: 'login' });
