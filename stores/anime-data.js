@@ -8,7 +8,7 @@ const useAnimeDataStore = defineStore('animeData', () => {
   const isFetching = ref(false);
   const isMiddlewareExecuted = ref(false);
 
-  const getIyashikeiAnime = computed(() => {
+  const iyashikeiAnime = computed(() => {
     return Object.values(allAnime.value.reduce((acc, anime) => {
       const mainTitle = anime.name // re-assign the title to name when I first fetch the data within index.vue
         .replace(/^(Zoku)\s*/, '')
@@ -65,7 +65,7 @@ const useAnimeDataStore = defineStore('animeData', () => {
     isMiddlewareExecuted.value = true;
   }
 
-  return { allAnime, isLoaded, isFetching, isMiddlewareExecuted, getMainstreamAnime, getIyashikeiAnime, getAnimeSeries,
+  return { allAnime, isLoaded, isFetching, isMiddlewareExecuted, iyashikeiAnime, getMainstreamAnime, getAnimeSeries,
     getAnimeById, setAllAnime, setMiddlewareExecuted }
 });
 

@@ -4,7 +4,7 @@ import useAnimeDataStore from '~/stores/anime-data.js';
 const store = useAnimeDataStore();
 
 const iyashikeiAnime = computed(() => {
-  return store.getIyashikeiAnime;
+  return store.iyashikeiAnime;
 });
 </script>
 
