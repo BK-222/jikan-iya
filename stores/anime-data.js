@@ -6,7 +6,7 @@ const useAnimeDataStore = defineStore('animeData', () => {
   const allAnime = ref([]);
   const isLoaded = ref(false);
   const isFetching = ref(false);
-  const isMiddlewareExecuted = ref(false);
+  const isInitialized = ref(false);
 
   const iyashikeiAnime = computed(() => {
     return Object.values(allAnime.value.reduce((acc, anime) => {
@@ -65,7 +65,7 @@ const useAnimeDataStore = defineStore('animeData', () => {
     isMiddlewareExecuted.value = true;
   }
 
-  return { allAnime, isLoaded, isFetching, isMiddlewareExecuted, iyashikeiAnime, getMainstreamAnime, getAnimeSeries,
+  return { allAnime, isLoaded, isFetching, isInitialized, iyashikeiAnime, getMainstreamAnime, getAnimeSeries,
     getAnimeById, setAllAnime, setMiddlewareExecuted }
 });
 

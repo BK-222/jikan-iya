@@ -36,7 +36,7 @@ const fetchAnimeData = defineNuxtRouteMiddleware(async (to, from) => {
 
 
 
-  // if (store.isMiddlewareExecuted) { return } // checking the flag for the executed middleware
+  // if (store.isInitialized) { return } // checking the flag for the executed middleware
   
   // Fetch anime data only if the store is empty
 
