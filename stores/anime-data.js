@@ -32,12 +32,12 @@ const useAnimeDataStore = defineStore('animeData', () => {
     }, {}));
   });
 
-  const getMainstreamAnime = (mainstreamAnimeIds) => {
+  function getMainstreamAnime(mainstreamAnimeIds) {
     return allAnime.value.filter(anime => mainstreamAnimeIds.includes(anime.id))
     .sort((a, b) => mainstreamAnimeIds.indexOf(a.id) - mainstreamAnimeIds.indexOf(b.id));
   }
 
-  const getAnimeSeries = (id) => {
+  function getAnimeSeries(id) {
     const seriesKey = Object.keys(animeSeriesData).find((key) =>
       animeSeriesData[key].includes(parseInt(id))
     );
@@ -48,12 +48,12 @@ const useAnimeDataStore = defineStore('animeData', () => {
     .filter((anime) => anime); // Filter out nulls if some IDs are missing
   }
 
-  const getAnimeById = (id) => {
+  function getAnimeById(id) {
     const animeId = allAnime.value.find(anime => anime.id === parseInt(id));
     return animeId;
   }
 
-  const setAllAnime = function(animeList) {
+  function setAllAnime(animeList) {
     if (allAnime.value.length > 0) {
       return;
     }
@@ -61,8 +61,8 @@ const useAnimeDataStore = defineStore('animeData', () => {
     isLoaded.value = true;
   }
 
-  const setMiddlewareExecuted = function() {
-    isMiddlewareExecuted.value = true;
+  function setMiddlewareExecuted() {
+    isInitialized.value = true;
   }
 
   return { allAnime, isLoaded, isFetching, isInitialized, iyashikeiAnime, getMainstreamAnime, getAnimeSeries,
