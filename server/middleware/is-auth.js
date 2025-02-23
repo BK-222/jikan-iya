@@ -9,9 +9,7 @@ export default defineEventHandler(async (event) => {
     const decoded = await auth.verifySessionCookie(sessionCookie);
     event.context.user = { uid: decoded.uid }
   } catch (error) {
-
     console.error('Auth middleware error:', error);
-
     deleteCookie(event, 'auth_token');
   }
 })
