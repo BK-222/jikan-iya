@@ -9,35 +9,38 @@ const isLoggedIn = computed(() => {
   return authStore.isAuthenticated;
 });
 
-// onMounted(() => {
-//   authReady.value = true;
-// });
-const isLoading = ref(true);
 onMounted(() => {
-  if (!authStore.isAuthenticated) {
-    authStore.tryLogin().then(() => {
-      isLoading.value = false;
-    });
-  } else {
-    isLoading.value = false;
-  }
+  authReady.value = true;
 });
+
+// const isLoading = ref(true); //consider using authReady instead, ask grok why it didnt work and we we needed this different onMounted code
+// onMounted(() => {
+//   if (!authStore.isAuthenticated) {
+//     authStore.tryLogin().then(() => {
+//       isLoading.value = false;
+//     });
+//   } else {
+//     isLoading.value = false;
+//   }
+// });
 
 </script>
 <template>
   <div class="flex flex-col items-center justify-center min-h-screen p-4 relative">
-    <div v-if="isLoading" class="animate-spin w-8 h-8 border-2 rounded-full border-gray-100 border-t-transparent"></div>
-    <div v-else class="flex gap-4 mb-4 md:flex-col md:absolute md:top-6 md:left-4 md:mb-0 md:gap-2 md:w-32">
-      <NuxtLink to="/mainstream">
+    <!-- <div v-if="!authReady" class="absolute inset-0 flex items-center justify-center z-10">
+      <div class="animate-spin w-8 h-8 border-2 rounded-full border-gray-100 border-t-transparent"></div>
+    </div> -->
+    <div v-if="authReady" class="flex gap-4 mb-4 md:flex-col md:absolute md:top-6 md:left-4 md:mb-0 md:gap-2 md:w-32">
+      <NuxtLink to="/mainstream" class="flex-1">
         <BaseButton class="w-full !py-1 font-medium border border-teal-600">mainstream</BaseButton>
       </NuxtLink>
-      <NuxtLink to="/iyashikei">
+      <NuxtLink to="/iyashikei" class="flex-1">
         <BaseButton class="w-full !py-1 font-medium border border-teal-600">iyashikei</BaseButton>
       </NuxtLink>
-      <NuxtLink v-if="!isLoggedIn" to="/auth">
+      <NuxtLink v-if="!isLoggedIn" to="/auth" class="flex-1">
         <BaseButton class="w-full !py-1 font-medium border border-teal-600">authenticate</BaseButton>
       </NuxtLink>
-      <NuxtLink v-else :to="`/profile/${authStore.userId}`">
+      <NuxtLink v-else :to="`/profile/${authStore.userId}`" class="flex-1">
         <BaseButton class="w-full !py-1 font-medium border border-teal-600">profile</BaseButton>
       </NuxtLink>
     </div>
