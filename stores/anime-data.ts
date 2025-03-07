@@ -98,6 +98,7 @@ interface AnimeSeriesData {  // for .json file
 }
 
 const typedAnimeSeriesData: AnimeSeriesData = animeSeriesData
+const mainstreamAnimeIds = [34798, 4081, 457, 17549]
 
 const useAnimeDataStore = defineStore('animeData', () => {
   const allAnime = ref<Anime[]>([])
@@ -138,10 +139,15 @@ const useAnimeDataStore = defineStore('animeData', () => {
     }, {}))
   })
 
-  function getMainstreamAnime(mainstreamAnimeIds: number[]): Anime[] {
+  const mainstreamAnime = computed(() => {
     return allAnime.value.filter(anime => mainstreamAnimeIds.includes(anime.id))
     .sort((a, b) => mainstreamAnimeIds.indexOf(a.id) - mainstreamAnimeIds.indexOf(b.id))
-  }
+  })
+
+  // function getMainstreamAnime(mainstreamAnimeIds: number[]): Anime[] {
+  //   return allAnime.value.filter(anime => mainstreamAnimeIds.includes(anime.id))
+  //   .sort((a, b) => mainstreamAnimeIds.indexOf(a.id) - mainstreamAnimeIds.indexOf(b.id))
+  // }
 
   function getAnimeSeries(id: string): Anime[] { // route.params.id are strings
     const seriesKey = Object.keys(typedAnimeSeriesData).find((key: string) =>
@@ -173,7 +179,7 @@ const useAnimeDataStore = defineStore('animeData', () => {
     isInitialized.value = true
   }
 
-  return { allAnime, isLoaded, isFetching, isInitialized, iyashikeiAnime, getMainstreamAnime, getAnimeSeries,
+  return { allAnime, isLoaded, isFetching, isInitialized, iyashikeiAnime, mainstreamAnime, getAnimeSeries,
     getAnimeById, setAllAnime, setMiddlewareExecuted }
 })
 

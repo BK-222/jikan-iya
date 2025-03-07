@@ -3,10 +3,10 @@ import useAnimeDataStore from '~/stores/anime-data';
 
 const store = useAnimeDataStore();
 
-const mainstreamAnimeIds = [34798, 4081, 457, 17549];
+// const mainstreamAnimeIds = [34798, 4081, 457, 17549];
 
 const mainstreamAnime = computed(() => {
-  return store.getMainstreamAnime(mainstreamAnimeIds);
+  return store.mainstreamAnime;
 });
 </script>
 
