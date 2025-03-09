@@ -1,11 +1,11 @@
-import useAuthStore from '~/stores/auth';
+import useAuthStore from '~/stores/auth'
 
-export default defineNuxtPlugin( async() => {
-  const authStore = useAuthStore();
-  if (import.meta.client && !auth.isAuthenticated) {
-    await authStore.tryLogin();
+export default defineNuxtPlugin(async() => {
+  const authStore = useAuthStore() 
+  if (import.meta.client && !authStore.isAuthenticated) {
+    await authStore.tryLogin()
   }
-});
+})
 
 // export default defineNuxtPlugin(async (nuxtApp) => {
 //   const authStore = useAuthStore();

@@ -84,4 +84,5 @@ const useAuthStore = defineStore('auth', {
   }
 });
 
+export type AuthStore = ReturnType<typeof useAuthStore> //for the auto-login plugin
 export default useAuthStore
