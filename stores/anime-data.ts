@@ -85,7 +85,7 @@ import { ref } from 'vue'
 
 import animeSeriesData from '@/data/anime-series.json'
 
-interface Anime {
+export interface Anime { // exported for the plugin
   id: number
   name: string
   image: string
@@ -144,11 +144,6 @@ const useAnimeDataStore = defineStore('animeData', () => {
     .sort((a, b) => mainstreamAnimeIds.indexOf(a.id) - mainstreamAnimeIds.indexOf(b.id))
   })
 
-  // function getMainstreamAnime(mainstreamAnimeIds: number[]): Anime[] {
-  //   return allAnime.value.filter(anime => mainstreamAnimeIds.includes(anime.id))
-  //   .sort((a, b) => mainstreamAnimeIds.indexOf(a.id) - mainstreamAnimeIds.indexOf(b.id))
-  // }
-
   function getAnimeSeries(id: string): Anime[] { // route.params.id are strings
     const seriesKey = Object.keys(typedAnimeSeriesData).find((key: string) =>
       typedAnimeSeriesData[key].includes(parseInt(id))
@@ -183,4 +178,5 @@ const useAnimeDataStore = defineStore('animeData', () => {
     getAnimeById, setAllAnime, setMiddlewareExecuted }
 })
 
+export type AnimeDataStore = ReturnType<typeof useAnimeDataStore>
 export default useAnimeDataStore
