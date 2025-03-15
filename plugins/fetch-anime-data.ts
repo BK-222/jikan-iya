@@ -13,7 +13,7 @@ export default defineNuxtPlugin(async () => {
 
   if (store.isLoaded || store.isFetching) {
     console.log('Anime data already loaded of fetching, skipping fetch.')
-    return;
+    return
   }
 
   store.isFetching = true
