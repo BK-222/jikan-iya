@@ -11,8 +11,7 @@
   },
   "dependencies": {
     "@nuxt/image": "^1.8.0",
-    "@nuxtjs/dotenv": "^1.4.2",
-    "@nuxtjs/i18n": "^8.5.5",
+    "@nuxtjs/seo": "^3.0.1",
     "@pinia/nuxt": "^0.5.4",
     "@supabase/supabase-js": "^2.45.4",
     "firebase": "^11.1.0",

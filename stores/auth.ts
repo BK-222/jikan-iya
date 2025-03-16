@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, type UserCredential } from 'firebase/auth'
-//import type { Auth } from 'firebase-admin/auth'
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, type UserCredential, type Auth } from 'firebase/auth'
 
 interface AuthState {
   userId: string | null
@@ -31,13 +30,14 @@ const useAuthStore = defineStore('auth', {
     },
     auth: async function({ email, password, mode }: AuthPayload & { mode: 'login' | 'signup' }): Promise<SessionResponse> {
       try {
-        const { $auth } = useNuxtApp()
+        const { $auth } = useNuxtApp();
+        const auth = $auth as Auth;
 
         let userCredential: UserCredential  // new .ts import { type UserCredential } from Firebase
         if (mode === 'login') {
-          userCredential = await signInWithEmailAndPassword($auth, email, password)
+          userCredential = await signInWithEmailAndPassword(auth, email, password)
         } else {
-          userCredential = await createUserWithEmailAndPassword($auth, email, password)
+          userCredential = await createUserWithEmailAndPassword(auth, email, password)
         }
 
         const idToken = await userCredential.user.getIdToken()

@@ -4,9 +4,22 @@ export default defineNuxtConfig({
   devtools: { enabled: false },
   ssr: true,
   modules: [
-    '@pinia/nuxt',
-    '@nuxt/image'
+    '@nuxtjs/seo',
+    '@nuxt/image',
+    '@pinia/nuxt'
   ],
+  // @ts-ignore
+  site: {
+    url: 'http://localhost:3000',
+    name: 'Jikan-Iya - Iyashikei Anime Hub',
+    description: 'Discover soothing iyashikei anime and manage your watchlist.',
+    defaultLocale: 'en'
+  },
+  hooks: {
+    'modules:before': () => {
+      console.log('Modules are being registered!')
+    }
+  },
   css: ['@/assets/css/main.css', '@/assets/css/transitions.css'],
   app: {
     pageTransition: {
