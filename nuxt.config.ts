@@ -8,17 +8,11 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@pinia/nuxt'
   ],
-  // @ts-ignore
   site: {
-    url: 'http://localhost:3000',
-    name: 'Jikan-Iya - Iyashikei Anime Hub',
+    url: 'https://jikan-iya.vercel.app/',
+    name: 'Jikan-Iya',
     description: 'Discover soothing iyashikei anime and manage your watchlist.',
     defaultLocale: 'en'
-  },
-  hooks: {
-    'modules:before': () => {
-      console.log('Modules are being registered!')
-    }
   },
   css: ['@/assets/css/main.css', '@/assets/css/transitions.css'],
   app: {

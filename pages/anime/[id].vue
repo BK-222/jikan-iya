@@ -33,6 +33,14 @@ const isInPlanned = computed(() => {
   return profileStore.plannedAnime.some(anime => String(anime.id) === animeId.value);
 });
 
+useSeoMeta({
+  title: () => `${animeDetails.value?.name || 'Anime'} | Jikan-Iya`,
+  description: () => `Discover ${animeDetails.value?.name || 'this anime'}, a ${animeDetails.value?.type || 'N/A'} anime with genres: ${animeDetails.value?.genres?.join(', ') || 'N/A'}.`,
+  ogTitle: () => `${animeDetails.value?.name || 'Anime'} | Jikan-Iya`,
+  ogDescription: () => `Discover ${animeDetails.value?.name || 'this anime'}, a ${animeDetails.value?.type || 'N/A'} anime with genres: ${animeDetails.value?.genres?.join(', ') || 'N/A'}.`,
+  ogImage: () => animeDetails.value?.image,
+});
+
 const updateAnimeList = async (method, errorMessage) => {
   if (!animeDetails.value) return;
   try {
@@ -64,7 +72,6 @@ const removeFromPlanned = function() {
 //   }
 // }
 
-
 const goBack = () => { router.back() }
 
 </script>
@@ -75,7 +82,7 @@ const goBack = () => { router.back() }
     <div v-if="!store.isLoaded">Loading anime details...</div>
     <div v-else-if="!animeDetails">Anime not found</div>
     <div v-else class="flex flex-col items-center">
-      <img class="h-70 w-60 rounded-sm" :src="animeDetails.image" alt="Anime Image" />
+      <NuxtImg class="h-70 w-60 rounded-sm" :src="animeDetails.image" alt="Anime Image" loading="lazy" />
       <p class="font-medium">{{ animeDetails.name }}</p>
       <p class="text-sm text-gray-600">Genres: {{ animeDetails?.genres?.join(', ') || 'No genres available'}}</p>
       <ul>
@@ -97,7 +104,7 @@ const goBack = () => { router.back() }
         <li v-for="relatedAnime in animeSeries" :key="relatedAnime.id">
           <router-link :to="`/anime/${relatedAnime.id}`">
             <div class="flex flex-col w-28 p-4" :title="relatedAnime.name">
-              <NuxtImg :src="relatedAnime.image" :alt="relatedAnime.name" class="w-20 h-24 self-center rounded-sm" />
+              <NuxtImg :src="relatedAnime.image" :alt="relatedAnime.name" loading="lazy" class="w-20 h-24 self-center rounded-sm" />
               <span class="text-center truncate">{{ relatedAnime.name }}</span>
             </div>
           </router-link>

@@ -14,6 +14,14 @@ const plannedAnime = computed(() => {
   return store.plannedAnime;
 });
 
+useSeoMeta({
+  title: () => completedAnime.value.length > 0 ? `Profile | ${completedAnime.value.length} Completed Anime | Jikan-Iya` : 'Profile | Jikan-Iya',
+  description: () => completedAnime.value.length > 0 ? `Explore this user's anime watchlist with ${completedAnime.value.length} completed and ${plannedAnime.value.length} planned titles on Jikan-Iya.` : 'Explore your anime watchlist on Jikan-Iya.',
+  ogTitle: () => completedAnime.value.length > 0 ? `Profile | ${completedAnime.value.length} Completed Anime | Jikan-Iya` : 'Profile | Jikan-Iya',
+  ogDescription: () => completedAnime.value.length > 0 ? `Explore this user's anime watchlist with ${completedAnime.value.length} completed and ${plannedAnime.value.length} planned titles on Jikan-Iya.` : 'Explore your anime watchlist on Jikan-Iya.',
+  ogImage: () => 'https://jikan-iya.com/default-profile-image.jpg',
+});
+
 onMounted(() => {
   store.fetchProfile();
 });
